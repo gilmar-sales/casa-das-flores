@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, Unique} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 @Entity()
 export class User {
@@ -9,13 +9,24 @@ export class User {
     @Column()
     name: string;
 
-    @Column()
+    @Column({
+        select: false
+    })
     password: string;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     email: string;
 
-    @Column()
-    isAdmin: boolean;
+    @Column({
+        nullable: true
+    })
+    cpf: string;
+
+    @Column({
+        default: false
+    })
+    is_admin: boolean;
 
 }
