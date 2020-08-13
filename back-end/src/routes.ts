@@ -3,10 +3,10 @@ import { Router } from 'express'
 import UserController from './controllers/usersController'
 import ProfileController from './controllers/profileController'
 
-const routes = Router();
+const routes = Router()
 
 routes.get('/', (req, res) => {
-   return res.send('Hello World') 
+	return res.send('Hello World')
 })
 
 routes.post('/users', UserController.create)
@@ -17,4 +17,4 @@ routes.delete('/users/:id', UserController.delete)
 routes.post('/users/profile/auth', ProfileController.authenticate)
 routes.get('/users/profile/:id', ProfileController.read)
 
-export default routes;
+export default routes

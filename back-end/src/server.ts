@@ -1,8 +1,8 @@
 import app from './app'
-import { createConnection } from "typeorm"
+import { createConnection } from 'typeorm'
 
-createConnection();
+createConnection()
 
 app.listen(3333, () => {
-    console.log(`Server running on http://localhost:3333`)
+	console.log(`Server running on http://localhost:3333`)
 })
