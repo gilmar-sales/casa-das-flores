@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Routes from './Routes'
+import Routes from './routes'
 
 import theme from './global'
 import { ThemeProvider, CssBaseline } from '@material-ui/core'
