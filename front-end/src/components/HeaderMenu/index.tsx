@@ -25,42 +25,57 @@ import {
 	Toolbar,
 	Grid,
 	Drawer,
+	List,
+	ListItem,
+	ListItemText,
+	Divider,
 } from '@material-ui/core'
 
 export default function () {
 	const styles = useStyles()
+
 	const [value, setValue] = React.useState('recents')
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 	const [
 		mobileMoreAnchorEl,
 		setMobileMoreAnchorEl,
 	] = React.useState<null | HTMLElement>(null)
+	const [isDrawerOpen, setOpen] = React.useState(false)
+
+	const handleDrawerOpen = () => {
+		setOpen(true)
+	}
+
+	const handleDrawerClose = () => {
+		setOpen(false)
+	}
 
 	const isMenuOpen = Boolean(anchorEl)
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
-	function handleChange(event: React.ChangeEvent<{}>, newValue: string) {
-		setValue(newValue)
-	}
-
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleAccountMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget)
 	}
-
-	const handleMenuClose = () => {
+	const handleAccountMenuClose = () => {
 		setAnchorEl(null)
 		handleMobileMenuClose()
 	}
-
 	const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
 		setMobileMoreAnchorEl(event.currentTarget)
 	}
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null)
 	}
-	const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget)
-	}
+
+	const menuItems = [
+		'Tipos de Flores',
+		'Buquês de Flores',
+		'Arranjo de Flores',
+		'Vasos de Flores',
+		'Ocasiões',
+		'Presentes Especiais',
+		'Produtos Exclusivos',
+	]
 
 	const menuId = 'primary-search-account-menu'
 	const renderMenu = (
@@ -71,10 +86,10 @@ export default function () {
 			keepMounted
 			transformOrigin={{ vertical: 'top', horizontal: 'right' }}
 			open={isMenuOpen}
-			onClose={handleMenuClose}
+			onClose={handleAccountMenuClose}
 		>
-			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			<MenuItem onClick={handleAccountMenuClose}>Profile</MenuItem>
+			<MenuItem onClick={handleAccountMenuClose}>My account</MenuItem>
 		</Menu>
 	)
 
@@ -95,7 +110,7 @@ export default function () {
 				</IconButton>
 				<p>Suporte</p>
 			</MenuItem>
-			<MenuItem onClick={handleProfileMenuOpen}>
+			<MenuItem onClick={handleAccountMenuOpen}>
 				<IconButton
 					aria-label='account of current user'
 					aria-controls='primary-search-account-menu'
@@ -117,6 +132,11 @@ export default function () {
 		</Menu>
 	)
 
+	// Categories menu changes handler
+	function handleChange(event: React.ChangeEvent<{}>, newValue: string) {
+		setValue(newValue)
+	}
+
 	return (
 		<div className={styles.grow}>
 			<Grid container>
@@ -126,11 +146,10 @@ export default function () {
 						<Toolbar>
 							<div className={styles.sectionMobile}>
 								<IconButton
-									aria-label='show more'
-									aria-controls={mobileMenuId}
-									aria-haspopup='true'
-									onClick={handleMobileMenuOpen}
 									color='inherit'
+									aria-label='open drawer'
+									onClick={handleDrawerOpen}
+									edge='start'
 								>
 									<FiMenu />
 								</IconButton>
@@ -148,16 +167,13 @@ export default function () {
 								}}
 								variant='outlined'
 								size='small'
-								label='Pesquise um produto'
+								label='Pesquisa'
 								color='primary'
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position='end'>
 											<Tooltip title='Pesquisar'>
-												<IconButton
-													type='submit'
-													aria-label='large outlined primary button group'
-												>
+												<IconButton>
 													<FiSearch />
 												</IconButton>
 											</Tooltip>
@@ -178,7 +194,7 @@ export default function () {
 										color='inherit'
 										aria-controls='account-menu'
 										aria-haspopup='true'
-										onClick={handleClick}
+										onClick={handleAccountMenuOpen}
 									>
 										<FiUser />
 									</IconButton>
@@ -208,38 +224,42 @@ export default function () {
 								>
 									<FiMoreVertical />
 								</IconButton>
-								<Drawer anchor='left'></Drawer>
+								<Drawer
+									anchor='left'
+									open={isDrawerOpen}
+									onClose={handleDrawerClose}
+								>
+									<Typography variant='h6' noWrap>
+										Casa das Flores
+									</Typography>
+									<Divider />
+									<List>
+										{menuItems.map((text, index) => (
+											<ListItem button key={text}>
+												<ListItemText primary={text} />
+											</ListItem>
+										))}
+									</List>
+								</Drawer>
 							</div>
 						</Toolbar>
 					</AppBar>
 					{renderMobileMenu}
 					{renderMenu}
 					<div className={styles.sectionDesktop}>
-						<Grid item xs={12} xl={6}>
+						<Grid item xs={12}>
 							<BottomNavigation
 								value={value}
 								onChange={handleChange}
 								showLabels={true}
 							>
-								<BottomNavigationAction label='Tipos de Flores' value='tipos' />
-								<BottomNavigationAction
-									label='Buquês de Flores'
-									value='buques'
-								/>
-								<BottomNavigationAction
-									label='Arranjo de Flores'
-									value='arranjos'
-								/>
-								<BottomNavigationAction label='Flores em Vasos' value='vasos' />
-								<BottomNavigationAction label='Ocasiões' value='ocasioes' />
-								<BottomNavigationAction
-									label='Presentes Especiais'
-									value='especiais'
-								/>
-								<BottomNavigationAction
-									label='Produtos Exclusivos'
-									value='exclusivos'
-								/>
+								{menuItems.map((category) => (
+									<BottomNavigationAction
+										label={category}
+										value={category.toLowerCase().split(' ').join('_')}
+										key={category.toLowerCase().split(' ').join('_')}
+									/>
+								))}
 							</BottomNavigation>
 						</Grid>
 					</div>
