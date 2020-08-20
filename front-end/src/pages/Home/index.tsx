@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core'
 
 import ProductCard from '../../components/ProductCard'
 import CustomCarousel from '../../components/Carousel'
+import HeaderMenu from '../../components/HeaderMenu'
 
 export default function () {
 	const products = [
@@ -38,6 +39,7 @@ export default function () {
 
 	return (
 		<div style={{ flexGrow: 1 }}>
+			<HeaderMenu></HeaderMenu>
 			<Grid container={true}>
 				<Grid item xs={1} sm={2} md={1} xl={3} />
 				<Grid item xs={10} sm={8} md={10} xl={6}>
