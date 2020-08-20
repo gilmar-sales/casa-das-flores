@@ -5,10 +5,10 @@ import bcrypt from 'bcryptjs'
 
 export default {
 	async create(req: Request, res: Response) {
-		const { name, password, email } = req.body
+		const { name, lastName, password, email } = req.body
 
 		const user = new User()
-		user.name = name
+		user.name = name + ' ' + lastName
 		user.password = await bcrypt.hash(password, 10)
 		user.email = email
 

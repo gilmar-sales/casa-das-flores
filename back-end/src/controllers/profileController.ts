@@ -23,9 +23,9 @@ export default {
 			.where('user.email = :email', { email: email })
 			.getOne()
 
-		if (!user) res.status(400).send({ error: 'User not found' })
+		if (!user) res.send({ errors: { email: 'Usuário não encontrado' } })
 		else if (!(await bcrypt.compare(password, user.password)))
-			res.status(400).send({ error: 'Wrong password' })
-		else res.sendStatus(200)
+			res.send({ errors: { password: 'Senha incorreta' } })
+		else res.send({ id: user.id })
 	},
 }
