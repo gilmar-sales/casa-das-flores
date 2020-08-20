@@ -4,6 +4,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		grow: {
 			flexGrow: 1,
+			marginBottom: theme.spacing(2),
 		},
 		sectionDesktop: {
 			display: 'none',
@@ -19,6 +20,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 		},
 		search: {
 			marginRight: theme.spacing(2),
+			width: '50%',
 			'& svg': {
 				color: 'white',
 			},
