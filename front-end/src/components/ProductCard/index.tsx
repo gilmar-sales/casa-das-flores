@@ -61,7 +61,7 @@ const Product: React.FC<IProps> = ({ product }) => {
 						<FiShare2 />
 					</IconButton>
 				</Tooltip>
-				<Tooltip title='Adicionar a cesta'>
+				<Tooltip title='Adicionar à cesta'>
 					<IconButton className={styles.addToBag}>
 						<FiPlus />
 					</IconButton>
