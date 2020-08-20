@@ -6,6 +6,7 @@ import {
 	FiShoppingBag,
 	FiMoreVertical,
 	FiMenu,
+	FiHeart,
 } from 'react-icons/fi'
 
 import { useStyles } from './styles'
@@ -105,21 +106,18 @@ export default function () {
 			onClose={handleMobileMenuClose}
 		>
 			<MenuItem>
-				<IconButton aria-label='show 4 new mails' color='inherit'>
+				<IconButton color='inherit'>
 					<FiMessageSquare />
 				</IconButton>
 				<p>Suporte</p>
 			</MenuItem>
-			<MenuItem onClick={handleAccountMenuOpen}>
-				<IconButton
-					aria-label='account of current user'
-					aria-controls='primary-search-account-menu'
-					aria-haspopup='true'
-					color='inherit'
-				>
-					<FiUser />
+			<MenuItem>
+				<IconButton aria-label='show 11 new notifications' color='inherit'>
+					<Badge badgeContent={1} color='secondary'>
+						<FiHeart />
+					</Badge>
 				</IconButton>
-				<p>Conta</p>
+				<p>Lista de desejos</p>
 			</MenuItem>
 			<MenuItem>
 				<IconButton aria-label='show 11 new notifications' color='inherit'>
@@ -127,7 +125,17 @@ export default function () {
 						<FiShoppingBag />
 					</Badge>
 				</IconButton>
-				<p>Cesta</p>
+				<p>Cesta de compras</p>
+			</MenuItem>
+			<MenuItem onClick={handleAccountMenuOpen}>
+				<IconButton
+					aria-controls='primary-search-account-menu'
+					aria-haspopup='true'
+					color='inherit'
+				>
+					<FiUser />
+				</IconButton>
+				<p>Conta</p>
 			</MenuItem>
 		</Menu>
 	)
@@ -188,18 +196,21 @@ export default function () {
 										<FiMessageSquare />
 									</IconButton>
 								</Tooltip>
-
-								<Tooltip title='Conta'>
-									<IconButton
-										color='inherit'
-										aria-controls='account-menu'
-										aria-haspopup='true'
-										onClick={handleAccountMenuOpen}
-									>
-										<FiUser />
+								<Tooltip title='Lista de desejos'>
+									<IconButton color='inherit'>
+										<Badge
+											badgeContent={4}
+											color='secondary'
+											anchorOrigin={{
+												vertical: 'bottom',
+												horizontal: 'right',
+											}}
+										>
+											<FiHeart />
+										</Badge>
 									</IconButton>
 								</Tooltip>
-								<Tooltip title='Cesta'>
+								<Tooltip title='Cesta de compras'>
 									<IconButton color='inherit'>
 										<Badge
 											badgeContent={4}
@@ -211,6 +222,16 @@ export default function () {
 										>
 											<FiShoppingBag />
 										</Badge>
+									</IconButton>
+								</Tooltip>
+								<Tooltip title='Conta'>
+									<IconButton
+										color='inherit'
+										aria-controls='account-menu'
+										aria-haspopup='true'
+										onClick={handleAccountMenuOpen}
+									>
+										<FiUser />
 									</IconButton>
 								</Tooltip>
 							</div>
