@@ -89,8 +89,12 @@ export default function () {
 			open={isMenuOpen}
 			onClose={handleAccountMenuClose}
 		>
-			<MenuItem onClick={handleAccountMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleAccountMenuClose}>My account</MenuItem>
+			<MenuItem onClick={() => (window.location.href = '/sign-in')}>
+				Entrar
+			</MenuItem>
+			<MenuItem onClick={() => (window.location.href = '/sign-up')}>
+				Inscrever-se
+			</MenuItem>
 		</Menu>
 	)
 
