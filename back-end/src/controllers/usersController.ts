@@ -1,23 +1,30 @@
 import { Request, Response } from 'express'
-import { getConnection, Index } from 'typeorm'
+import { getConnection, Index, getRepository } from 'typeorm'
 import { User } from '../entity/User'
-import bcrypt from 'bcryptjs'
 
 export default {
 	async create(req: Request, res: Response) {
 		const { name, lastName, password, email } = req.body
 
-		const user = new User()
-		user.name = name + ' ' + lastName
-		user.password = await bcrypt.hash(password, 10)
-		user.email = email
+		const repository = getRepository(User)
 
-		await getConnection()
-			.manager.save(user)
-			.then(() => {
-				res.sendStatus(200)
+		const userExists = await repository.findOne({ where: { email } })
+
+		if (userExists) {
+			return res.send({
+				errors: { email: 'Email já está sendo utilizado por outro usuário' },
 			})
-			.catch((error) => res.status(400).send({ error: error.detail }))
+		}
+
+		const user = repository.create({
+			name: name + ' ' + lastName,
+			email: email,
+			password: password,
+		})
+
+		await repository.save(user)
+
+		return res.json(user)
 	},
 	async read(req: Request, res: Response) {
 		const users = await getConnection('default').manager.find(User)
@@ -25,11 +32,11 @@ export default {
 		return res.send(users)
 	},
 	async update(req: Request, res: Response) {
-		req.body.password = await bcrypt.hash(req.body.password, 10)
+		const repository = getRepository(User)
 
-		await getConnection()
+		await repository
 			.createQueryBuilder()
-			.update(User)
+			.update()
 			.where('id = :id', { id: req.params.id })
 			.set({
 				...req.body,
@@ -43,8 +50,9 @@ export default {
 			})
 	},
 	async delete(req: Request, res: Response) {
-		const user = await getConnection()
-			.getRepository(User)
+		const repository = getRepository(User)
+
+		const user = await repository
 			.createQueryBuilder()
 			.delete()
 			.where('id = :id', { id: req.params.id })
