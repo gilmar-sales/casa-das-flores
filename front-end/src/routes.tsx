@@ -11,6 +11,8 @@ import Home from './pages/Home'
 
 import { isAuthenticated } from './middlewares/auth'
 
+import NavBarProvider from './components/NavBarProvider'
+
 const ProtectedRoute: React.FC<RouteProps> = (props) => {
 	if (!isAuthenticated()) {
 		return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
@@ -23,7 +25,9 @@ export default function () {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route path='/' exact component={Home} />
+				<NavBarProvider>
+					<Route path='/' exact component={Home} />
+				</NavBarProvider>
 			</Switch>
 		</BrowserRouter>
 	)
