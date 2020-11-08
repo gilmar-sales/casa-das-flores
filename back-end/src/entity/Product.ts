@@ -1,24 +1,51 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	ManyToOne,
+	OneToMany,
+} from 'typeorm'
+
+import { Category } from './Category'
+import { Picture } from './Picture'
 
 @Entity()
 export class Product {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@Column()
+	@Column({ unique: true })
 	name: string
 
 	@Column()
 	description: string
 
-	@Column()
-	price: number
+	@ManyToOne((type) => Category, (category) => category.products)
+	category: Category
 
-	@Column()
-	active: boolean
+	@Column('decimal', {
+		precision: 10,
+		scale: 2,
+	})
+	unitPrice: number
+
+	@OneToMany((type) => Picture, (picture) => picture.product)
+	pictures: Picture[]
 
 	@Column({
-		nullable: true,
+		default: true,
 	})
-	image: string
+	active: boolean
+
+	@Column({ nullable: true })
+	width: number
+
+	@Column({ nullable: true })
+	height: number
+
+	@Column({ nullable: true })
+	depth: number
+
+	@Column()
+	createdDate: Date
 }
