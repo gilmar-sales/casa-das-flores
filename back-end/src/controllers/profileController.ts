@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
-import { User } from '../entity/User'
+import { Customer } from '../entity/Customer'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 export default {
 	async read(req: Request, res: Response) {
-		const repository = getRepository(User)
+		const repository = getRepository(Customer)
 		const user = await repository.findOne({ where: { id: req.params.id } })
 
 		return res.send(user)
@@ -14,7 +14,7 @@ export default {
 	async authenticate(req: Request, res: Response) {
 		const { email, password } = req.body
 
-		const repository = getRepository(User)
+		const repository = getRepository(Customer)
 
 		const user = await repository
 			.createQueryBuilder('user')

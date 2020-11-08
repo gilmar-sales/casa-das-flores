@@ -9,12 +9,15 @@ import {
 import bcrypt from 'bcryptjs'
 
 @Entity()
-export class User {
+export class Customer {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	name: string
+	firstName: string
+
+	@Column()
+	lastName: string
 
 	@Column({
 		select: false,
@@ -32,13 +35,16 @@ export class User {
 	cpf: string
 
 	@Column({
-		default: false,
+		nullable: true,
 	})
-	is_admin: boolean
+	profilePicture: string
+
+	@Column()
+	createdDate: Date
 
 	@BeforeInsert()
 	@BeforeUpdate()
 	hashPassword() {
-		this.password = bcrypt.hashSync(this.password, 10)
+		this.password = bcrypt.hashSync(this.password, 12)
 	}
 }
