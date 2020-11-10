@@ -8,12 +8,20 @@ export default {
 
 		const repository = getRepository(Customer)
 
+		const emailFeedback = {
+			name: 'email',
+			errors: [],
+		}
+
+		const feedback = [emailFeedback]
+
 		const customerExists = await repository.findOne({ where: { email } })
 
 		if (customerExists) {
-			return res.send({
-				errors: { email: 'Email já está sendo utilizado por outro usuário' },
-			})
+			emailFeedback.errors.push(
+				'Email já está sendo utilizado por outro usuário'
+			)
+			return res.send({ errors: feedback })
 		}
 
 		const customer = repository.create({

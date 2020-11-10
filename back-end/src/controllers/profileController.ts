@@ -16,6 +16,17 @@ export default {
 
 		const repository = getRepository(Customer)
 
+		const emailFeedback = {
+			name: 'email',
+			errors: [],
+		}
+		const passwordFeedback = {
+			name: 'password',
+			errors: [],
+		}
+
+		const feedback = [emailFeedback, passwordFeedback]
+
 		const user = await repository
 			.createQueryBuilder('user')
 			.addSelect('user.password')
@@ -23,12 +34,14 @@ export default {
 			.getOne()
 
 		if (!user) {
-			return res.send({ errors: { email: 'Usuário não encontrado' } })
+			emailFeedback.errors.push('Usuário não encontrado')
+			return res.send({ errors: feedback })
 		}
 
 		const isValidPassword = await bcrypt.compare(password, user.password)
 		if (!isValidPassword) {
-			return res.send({ errors: { password: 'Senha incorreta' } })
+			passwordFeedback.errors.push('Senha incorreta')
+			return res.send({ errors: feedback })
 		}
 
 		const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1d' })
