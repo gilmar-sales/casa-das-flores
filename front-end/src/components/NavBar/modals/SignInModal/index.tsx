@@ -1,46 +1,113 @@
-import React, { useContext } from 'react'
-import { Button, Modal, Form, Input, Checkbox } from 'antd'
+import React, { useContext, useState } from 'react'
+import {
+	Button,
+	Modal,
+	Form,
+	Input,
+	Checkbox,
+	Typography,
+	Row,
+	Col,
+} from 'antd'
 
 import NavBarContext from '../../../../contexts/NavBarContext'
 import { FiX } from 'react-icons/fi'
 
+import api from '../../../../middlewares/api'
+import { login } from '../../../../middlewares/auth'
+
 export default function () {
+	const [form] = Form.useForm()
 	const ctx = useContext(NavBarContext)
+	const [isSubmitLoading, setSubmitLoading] = useState(false)
+
+	const onFinish = (values: any) => {
+		setSubmitLoading(true)
+		api.post('/customers/profile/auth', values).then((response) => {
+			setSubmitLoading(false)
+			if (response.data.errors) {
+				form.setFields(response.data.errors)
+			} else {
+				login(response.data.token)
+				window.location.href = '/'
+			}
+		})
+	}
+
 	return (
-		<Form name='basic' initialValues={{ remember: true }} size={'large'}>
-			<Modal
-				visible={ctx.isAccountModalVisible}
-				closeIcon={<FiX />}
-				title={'Entrar'}
-				onCancel={() => ctx.setAccountModalVisible(false)}
-				footer={[
-					<Form.Item>
-						<Button type='primary' htmlType='submit'>
-							Entrar
-						</Button>
-					</Form.Item>,
-				]}
+		<Modal
+			visible={ctx.isAccountModalVisible}
+			closeIcon={<FiX />}
+			title={'Entrar'}
+			onCancel={() => ctx.setAccountModalVisible(false)}
+			footer={null}
+		>
+			<Form
+				name='sign-in'
+				form={form}
+				onFinish={onFinish}
+				initialValues={{ remember: true }}
+				size={'large'}
 			>
 				<Form.Item
-					label='Username'
-					name='username'
-					rules={[{ required: true, message: 'Please input your username!' }]}
+					label='E-mail'
+					name='email'
+					rules={[
+						{ required: true, message: 'Por favor entre com seu e-mail!' },
+						{
+							type: 'email',
+							message: 'E-mail inválido',
+						},
+					]}
 				>
 					<Input />
 				</Form.Item>
 
 				<Form.Item
-					label='Password'
+					label='Senha'
 					name='password'
-					rules={[{ required: true, message: 'Please input your password!' }]}
+					rules={[
+						{ required: true, message: 'Por favor entre com sua senha!' },
+						{ min: 8, message: 'A senha precisa ter no mínimo 8 caracteres' },
+					]}
 				>
 					<Input.Password />
 				</Form.Item>
 
-				<Form.Item style={{ marginBottom: 0 }} name='remember'>
-					<Checkbox>Lembrar de mim</Checkbox>
+				<Form.Item name='remember'>
+					<Checkbox>Lembrar senha</Checkbox>
 				</Form.Item>
-			</Modal>
-		</Form>
+				<Row justify={'space-between'} key={'asd'}>
+					<Col key={'1'}>
+						<Typography>
+							<Typography.Link onClick={() => ctx.setModalValue('sign-up')}>
+								{'Esqueceu a senha?'}
+							</Typography.Link>
+						</Typography>
+					</Col>
+					<Col key={'2'}>
+						<Typography>
+							Não possui uma conta?
+							<Typography.Link onClick={() => ctx.setModalValue('sign-up')}>
+								{' Inscreva-se'}
+							</Typography.Link>
+						</Typography>
+					</Col>
+				</Row>
+				<Row justify={'end'}>
+					<Col>
+						<Form.Item>
+							<Button
+								type='primary'
+								htmlType='submit'
+								loading={isSubmitLoading}
+							>
+								Entrar
+							</Button>
+						</Form.Item>
+					</Col>
+				</Row>
+			</Form>
+		</Modal>
 	)
 }
