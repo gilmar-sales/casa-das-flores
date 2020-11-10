@@ -1,10 +1,7 @@
 import React, { useContext, useState } from 'react'
 
-import { Button, Modal, Form, Input, Checkbox, Row, Col, message } from 'antd'
+import { Button, Modal, Form, Input, Checkbox, Row, Col } from 'antd'
 import { FiX } from 'react-icons/fi'
-
-import * as Formik from 'formik'
-import { object, string } from 'yup'
 
 import api from '../../../../middlewares/api'
 
@@ -41,6 +38,7 @@ export default function () {
 
 		api.post('/customers', values).then((response) => {
 			setSubmitLoading(false)
+			console.log(response)
 			if (response.data.errors) {
 				form.setFields(response.data.errors)
 			} else {
@@ -50,24 +48,24 @@ export default function () {
 	}
 
 	return (
-		<Form
-			form={form}
-			name='basic'
-			initialValues={{ remember: true }}
-			size={'large'}
-			onFinish={onFinish}
+		<Modal
+			visible={ctx.isAccountModalVisible}
+			closeIcon={<FiX />}
+			title={'Inscrever-se'}
+			centered
+			onCancel={() => ctx.setAccountModalVisible(false)}
+			footer={null}
 		>
-			<Modal
-				visible={ctx.isAccountModalVisible}
-				closeIcon={<FiX />}
-				title={'Inscrever-se'}
-				centered
-				onCancel={() => ctx.setAccountModalVisible(false)}
-				footer={null}
+			<Form
+				form={form}
+				name='basic'
+				initialValues={{ remember: false }}
+				size={'large'}
+				onFinish={onFinish}
 			>
 				<Form.Item
 					label='Nome'
-					name='name'
+					name='firstName'
 					rules={[{ required: true, message: 'Por favor entre com seu nome!' }]}
 				>
 					<Input />
@@ -89,7 +87,7 @@ export default function () {
 					rules={[
 						({ getFieldValue }) => ({
 							validator(rule, value) {
-								let clean = value.replace(/[^\d]/g, '')
+								let clean = value ? value.replace(/[^\d]/g, '') : ''
 								let firstNineDigits = clean.substring(0, 9)
 								let checker = clean.substring(9, 11)
 
@@ -173,7 +171,11 @@ export default function () {
 					<Input.Password />
 				</Form.Item>
 
-				<Form.Item style={{ marginBottom: 0 }} name='remember'>
+				<Form.Item
+					style={{ marginBottom: 0 }}
+					name='remember'
+					valuePropName='checked'
+				>
 					<Checkbox>
 						Quero receber promoções de marketing e atualizações por e-mail.
 					</Checkbox>
@@ -192,7 +194,7 @@ export default function () {
 						</Form.Item>
 					</Col>
 				</Row>
-			</Modal>
-		</Form>
+			</Form>
+		</Modal>
 	)
 }

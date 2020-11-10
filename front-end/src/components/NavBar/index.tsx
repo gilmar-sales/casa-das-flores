@@ -130,7 +130,6 @@ export default function (props: { children: any }) {
 										shape='circle'
 										icon={<FiMessageSquare size={24} />}
 										size={'large'}
-										onClick={() => console.log(screens)}
 									/>
 								</Tooltip>
 							</Col>

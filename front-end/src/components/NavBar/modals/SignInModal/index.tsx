@@ -74,7 +74,7 @@ export default function () {
 					<Input.Password />
 				</Form.Item>
 
-				<Form.Item name='remember'>
+				<Form.Item name='remember' valuePropName='checked'>
 					<Checkbox>Lembrar senha</Checkbox>
 				</Form.Item>
 				<Row justify={'space-between'} key={'asd'}>
