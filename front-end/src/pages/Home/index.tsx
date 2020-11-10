@@ -31,20 +31,24 @@ const product = {
 export default function () {
 	return (
 		<div style={{ flexGrow: 1 }}>
-			<Carousel>
-				<div>
-					<h3 style={contentStyle}>1</h3>
-				</div>
-				<div>
-					<h3 style={contentStyle}>2</h3>
-				</div>
-				<div>
-					<h3 style={contentStyle}>3</h3>
-				</div>
-				<div>
-					<h3 style={contentStyle}>4</h3>
-				</div>
-			</Carousel>
+			<Row justify={'center'}>
+				<Col xs={24} md={16} lg={12} xl={8}>
+					<Carousel>
+						<div>
+							<h3 style={contentStyle}>1</h3>
+						</div>
+						<div>
+							<h3 style={contentStyle}>2</h3>
+						</div>
+						<div>
+							<h3 style={contentStyle}>3</h3>
+						</div>
+						<div>
+							<h3 style={contentStyle}>4</h3>
+						</div>
+					</Carousel>
+				</Col>
+			</Row>
 
 			<Row justify='center'>
 				<Pagination
@@ -65,9 +69,17 @@ export default function () {
 				}}
 				gutter={[16, 16]}
 			>
-				{[...Array(12)].map(() => {
+				{[...Array(12)].map((value, index) => {
 					return (
-						<Col xs={24} sm={12} md={6} lg={6} xl={4} xxl={2}>
+						<Col
+							key={index.toString()}
+							xs={24}
+							sm={12}
+							md={6}
+							lg={6}
+							xl={4}
+							xxl={2}
+						>
 							<ProductCard product={product}></ProductCard>
 						</Col>
 					)
