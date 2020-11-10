@@ -30,6 +30,7 @@ export class Customer {
 	email: string
 
 	@Column({
+		select: false,
 		nullable: true,
 	})
 	cpf: string
