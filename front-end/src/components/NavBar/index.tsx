@@ -10,31 +10,62 @@ import {
 	Menu,
 	Dropdown,
 	Typography,
+	message,
+	Avatar,
 } from 'antd'
 import {
-	FiHeart,
-	FiMessageSquare,
-	FiSearch,
-	FiShoppingBag,
-	FiUser,
-} from 'react-icons/fi'
-import { DownOutlined } from '@ant-design/icons'
+	ShoppingOutlined,
+	HeartOutlined,
+	MessageOutlined,
+	SearchOutlined,
+	UserOutlined,
+} from '@ant-design/icons'
 import NavBarContext from '../../contexts/NavBarContext'
+
+import {
+	isAuthenticated,
+	logout,
+	NAME_KEY,
+	LAST_NAME_KEY,
+	PROFILE_PICTURE_KEY,
+} from '../../middlewares/auth'
 
 import SignInModal from './modals/SignInModal'
 import SignUpModal from './modals/SignUpModal'
 import LogoIcon from '../../icons/Logo'
+import { stringify } from 'querystring'
 
 const { Header, Content, Footer } = Layout
-
 const { useBreakpoint } = Grid
 const { Search } = Input
 
 export default function (props: { children: any }) {
 	const screens = useBreakpoint()
 	const ctx = useContext(NavBarContext)
+	const search = React.createRef<Input>()
+	const mobileSearch = React.createRef<Input>()
 
-	const accountMenu = (
+	const accountMenu = isAuthenticated() ? (
+		<Menu>
+			<Menu.Item key='1'>Perfil</Menu.Item>
+			<Menu.Item
+				key='2'
+				onClick={() => {
+					logout()
+					message.success({
+						content: 'Saiu com sucesso!',
+						style: {
+							marginTop: '10vh',
+						},
+					})
+					ctx.setAccountModalVisible(true)
+					ctx.setModalValue('sign-out-success')
+				}}
+			>
+				Sair
+			</Menu.Item>
+		</Menu>
+	) : (
 		<Menu>
 			<Menu.Item
 				key='1'
@@ -54,24 +85,12 @@ export default function (props: { children: any }) {
 			>
 				Inscrever-se
 			</Menu.Item>
-
-			{ctx.modalValue === 'sign-in' ? <SignInModal /> : <SignUpModal />}
-		</Menu>
-	)
-
-	const menu = (
-		<Menu>
-			<Menu.Item key='1'>1st menu item</Menu.Item>
-			<Menu.Item key='2'>2nd menu item</Menu.Item>
-			<Menu.Item key='3'>3rd menu item</Menu.Item>
 		</Menu>
 	)
 
 	return (
 		<Layout>
-			<Header
-				style={{ userSelect: 'none', display: 'flex', alignItems: 'center' }}
-			>
+			<Header style={{ height: '100%', padding: '0px 8px' }}>
 				<Row
 					align='middle'
 					justify='space-between'
@@ -106,29 +125,23 @@ export default function (props: { children: any }) {
 							<Search
 								placeholder='Procurando alguma coisa?'
 								allowClear
-								enterButton={<FiSearch size={20} />}
+								enterButton={<SearchOutlined style={{ fontSize: 24 }} />}
+								ref={search}
+								onChange={(event) =>
+									mobileSearch.current?.setValue(event.target.value)
+								}
 							/>
 						</Row>
 					</Col>
 
-					<Col xs={10} sm={0}>
-						<Row align='middle'>
-							<Dropdown overlay={menu}>
-								<Button type='primary' icon={<FiSearch size={20} />}>
-									{' '}
-									<DownOutlined />
-								</Button>
-							</Dropdown>
-						</Row>
-					</Col>
-					<Col span={6}>
-						<Row justify='end' wrap={false} gutter={[10, 0]}>
+					<Col>
+						<Row wrap={false} gutter={[10, 0]}>
 							<Col>
 								<Tooltip placement='left' title='Suporte'>
 									<Button
 										type='primary'
 										shape='circle'
-										icon={<FiMessageSquare size={24} />}
+										icon={<MessageOutlined style={{ fontSize: 24 }} />}
 										size={'large'}
 									/>
 								</Tooltip>
@@ -138,7 +151,7 @@ export default function (props: { children: any }) {
 									<Button
 										type='primary'
 										shape='circle'
-										icon={<FiHeart size={24} />}
+										icon={<HeartOutlined style={{ fontSize: 24 }} />}
 										size={'large'}
 									/>
 								</Tooltip>
@@ -148,7 +161,7 @@ export default function (props: { children: any }) {
 									<Button
 										type='primary'
 										shape='circle'
-										icon={<FiShoppingBag size={24} />}
+										icon={<ShoppingOutlined style={{ fontSize: 24 }} />}
 										size={'large'}
 									/>
 								</Tooltip>
@@ -156,21 +169,72 @@ export default function (props: { children: any }) {
 							<Col>
 								<Tooltip placement='right' title='Conta'>
 									<Dropdown overlay={accountMenu} trigger={['click']}>
-										<Button
-											type='primary'
-											shape='circle'
-											icon={<FiUser size={24} />}
-											size={'large'}
-										/>
+										{isAuthenticated() ? (
+											localStorage.getItem(PROFILE_PICTURE_KEY) === null ? (
+												<Avatar
+													src={localStorage.getItem(PROFILE_PICTURE_KEY)}
+													size={40}
+													style={{ cursor: 'pointer', marginTop: -5 }}
+												></Avatar>
+											) : (
+												<Avatar
+													size={40}
+													style={{
+														backgroundColor: '#13AE7A',
+														cursor: 'pointer',
+														marginTop: -5,
+													}}
+												>
+													{localStorage
+														.getItem(NAME_KEY)
+														?.charAt(0)
+														.toUpperCase()}
+													{localStorage
+														.getItem(LAST_NAME_KEY)
+														?.charAt(0)
+														.toUpperCase()}
+												</Avatar>
+											)
+										) : (
+											<Button
+												type='primary'
+												shape='circle'
+												icon={<UserOutlined style={{ fontSize: 24 }} />}
+												size={'large'}
+											/>
+										)}
 									</Dropdown>
 								</Tooltip>
 							</Col>
 						</Row>
 					</Col>
 				</Row>
+				<Row
+					align='middle'
+					justify='center'
+					wrap={false}
+					style={{ flexGrow: 1 }}
+					gutter={[10, 10]}
+				>
+					<Col xs={20} sm={0}>
+						<Row align='middle'>
+							<Search
+								placeholder='Procurando alguma coisa?'
+								allowClear
+								ref={mobileSearch}
+								enterButton={<SearchOutlined style={{ fontSize: 24 }} />}
+								size='large'
+								onChange={(event) =>
+									search.current?.setValue(event.target.value)
+								}
+							/>
+						</Row>
+					</Col>
+				</Row>
 			</Header>
 			<Content>{props.children}</Content>
 			<Footer>casa das flores - 2020</Footer>
+			<SignInModal /> <SignUpModal />
 		</Layout>
 	)
 }

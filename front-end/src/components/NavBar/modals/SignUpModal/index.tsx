@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 
-import { Button, Modal, Form, Input, Checkbox, Row, Col } from 'antd'
-import { FiX } from 'react-icons/fi'
+import { Button, Modal, message, Form, Input, Checkbox, Row, Col } from 'antd'
 
 import api from '../../../../middlewares/api'
 
@@ -42,15 +41,21 @@ export default function () {
 			if (response.data.errors) {
 				form.setFields(response.data.errors)
 			} else {
-				window.location.href = '/'
+				message.success({
+					content: 'Inscrição bem sucedida!',
+					style: {
+						marginTop: '10vh',
+					},
+				})
+				ctx.setAccountModalVisible(false)
+				form.resetFields()
 			}
 		})
 	}
 
 	return (
 		<Modal
-			visible={ctx.isAccountModalVisible}
-			closeIcon={<FiX />}
+			visible={ctx.isAccountModalVisible && ctx.modalValue === 'sign-up'}
 			title={'Inscrever-se'}
 			centered
 			onCancel={() => ctx.setAccountModalVisible(false)}

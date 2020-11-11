@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import {
 	Button,
 	Modal,
+	message,
 	Form,
 	Input,
 	Checkbox,
@@ -11,7 +12,6 @@ import {
 } from 'antd'
 
 import NavBarContext from '../../../../contexts/NavBarContext'
-import { FiX } from 'react-icons/fi'
 
 import api from '../../../../middlewares/api'
 import { login } from '../../../../middlewares/auth'
@@ -28,16 +28,22 @@ export default function () {
 			if (response.data.errors) {
 				form.setFields(response.data.errors)
 			} else {
-				login(response.data.token)
-				window.location.href = '/'
+				login(response.data)
+				ctx.setModalValue('sign-in-success')
+				message.success({
+					content: 'Entrou com sucesso!',
+					style: {
+						marginTop: '10vh',
+					},
+				})
+				form.resetFields()
 			}
 		})
 	}
 
 	return (
 		<Modal
-			visible={ctx.isAccountModalVisible}
-			closeIcon={<FiX />}
+			visible={ctx.isAccountModalVisible && ctx.modalValue === 'sign-in'}
 			title={'Entrar'}
 			onCancel={() => ctx.setAccountModalVisible(false)}
 			footer={null}
