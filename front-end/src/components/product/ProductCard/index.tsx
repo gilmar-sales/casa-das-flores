@@ -1,6 +1,11 @@
 import React from 'react'
 import { Button, Card, Skeleton, Tooltip, Typography } from 'antd'
-import { FiArrowRight, FiHeart, FiPlus } from 'react-icons/fi'
+
+import {
+	ArrowRightOutlined,
+	HeartOutlined,
+	PlusOutlined,
+} from '@ant-design/icons'
 
 interface ICategory {
 	id: number
@@ -13,7 +18,7 @@ interface IPicture {
 	path: string
 }
 
-export interface IProduct {
+export interface Product {
 	id: number
 	name: string
 	description: string
@@ -27,7 +32,7 @@ export interface IProduct {
 }
 
 interface IProps {
-	product: IProduct
+	product: Product
 	loading?: boolean
 }
 
@@ -46,22 +51,14 @@ const ProductCard: React.FC<IProps> = ({ product }, loading = false) => {
 			size={'small'}
 			cover={<img alt='example' src='images/products/buque.jpg' />}
 			actions={[
-				<Tooltip title='Adicionar aos favoritos'>
-					<Button
-						shape='circle'
-						size={'large'}
-						icon={<FiHeart fill={'white'} size={24} />}
-					/>
+				<Tooltip title='Adicionar à lista de desejos'>
+					<Button shape='circle' size={'large'} icon={<HeartOutlined />} />
 				</Tooltip>,
 				<Tooltip title='Adicionar à cesta'>
-					<Button shape='circle' size={'large'} icon={<FiPlus size={24} />} />
+					<Button shape='circle' size={'large'} icon={<PlusOutlined />} />
 				</Tooltip>,
 				<Tooltip title='Visualizar'>
-					<Button
-						shape='circle'
-						icon={<FiArrowRight size={24} />}
-						size={'large'}
-					/>
+					<Button shape='circle' icon={<ArrowRightOutlined />} size={'large'} />
 				</Tooltip>,
 			]}
 		>
