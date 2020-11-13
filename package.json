@@ -1,0 +1,24 @@
+{
+	"name": "casa-das-flores",
+	"version": "0.1.0",
+	"description": "Um e-commerce para floricultura",
+	"scripts": {
+		"start": "cd back-end/ && yarn start",
+		"build": "cd front-end/ && npm install && npm run build"
+	},
+	"cacheDirectories": [
+		"back-end/node_modules",
+		"front-end/node_modules"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gilmarxd/casa-das-flores.git"
+	},
+	"keywords": [
+		"node",
+		"heroku",
+		"create-react-app",
+		"react"
+	],
+	"license": "MIT"
+}
