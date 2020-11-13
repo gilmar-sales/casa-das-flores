@@ -6,8 +6,8 @@
 		"node": "14.x"
 	},
 	"scripts": {
-		"start": "cd back-end/ && yarn start",
-		"build": "cd front-end/ && npm install && npm run build"
+		"start": "cd back-end/ && npm start",
+		"build": "cd back-end/ && npm install && cd ../front-end/ && npm install && npm run build"
 	},
 	"cacheDirectories": [
 		"back-end/node_modules",
