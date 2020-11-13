@@ -10,6 +10,9 @@ getConnectionOptions().then((connectionOptions) => {
 	)
 })
 
-app.listen(3333, () => {
-	console.log(`Server running on http://localhost:3333`)
+const host = process.env.API_HOST || '0.0.0.0'
+const port = +process.env.PORT || 3333
+
+app.listen(port, host, () => {
+	console.log(`Server running on http://${host}:${port}`)
 })
