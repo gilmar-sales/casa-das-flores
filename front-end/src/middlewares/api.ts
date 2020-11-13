@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getToken } from './auth'
 
 const port = process.env.PORT || 3333
-const url = process.env.HOST_NAME || `http://localhost:${port}`
+const url = 'https://casa-das-flores.herokuapp.com'
 
 const api = axios.create({ baseURL: `${url}/api` })
 
