@@ -2,6 +2,9 @@
 	"name": "casa-das-flores",
 	"version": "0.1.0",
 	"description": "Um e-commerce para floricultura",
+	"engines": {
+		"node": "14.x"
+	},
 	"scripts": {
 		"start": "cd back-end/ && yarn start",
 		"build": "cd front-end/ && npm install && npm run build"
