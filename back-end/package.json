@@ -6,7 +6,7 @@
 	"author": "Gilmar Custodio",
 	"license": "MIT",
 	"scripts": {
-		"start": "yarn ts-node-dev --respawn --transpile-only src/server.ts"
+		"start": "npx ts-node-dev --respawn --transpile-only src/server.ts"
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
