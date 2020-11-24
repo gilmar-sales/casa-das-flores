@@ -29,6 +29,7 @@ const product = {
 }
 
 export default function Home() {
+	document.title = 'Casa das Flores - Home'
 	return (
 		<div style={{ flexGrow: 1 }}>
 			<Row justify={'center'}>
