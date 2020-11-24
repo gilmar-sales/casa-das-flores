@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import {
 	Layout,
 	Input,
-	Grid,
 	Row,
 	Col,
 	Button,
@@ -29,25 +28,26 @@ import {
 	LAST_NAME_KEY,
 	PROFILE_PICTURE_KEY,
 } from '../../middlewares/auth'
+import { useHistory } from 'react-router-dom'
 
 import SignInModal from './modals/SignInModal'
 import SignUpModal from './modals/SignUpModal'
 import LogoIcon from '../../icons/Logo'
-import { stringify } from 'querystring'
 
 const { Header, Content, Footer } = Layout
-const { useBreakpoint } = Grid
 const { Search } = Input
 
 export default function (props: { children: any }) {
-	const screens = useBreakpoint()
 	const ctx = useContext(NavBarContext)
+	const history = useHistory()
 	const search = React.createRef<Input>()
 	const mobileSearch = React.createRef<Input>()
 
 	const accountMenu = isAuthenticated() ? (
 		<Menu>
-			<Menu.Item key='1'>Perfil</Menu.Item>
+			<Menu.Item key='1' onClick={() => history.push('/profile')}>
+				Perfil
+			</Menu.Item>
 			<Menu.Item
 				key='2'
 				onClick={() => {
@@ -99,11 +99,11 @@ export default function (props: { children: any }) {
 				>
 					<Col xs={0} md={6}>
 						<Typography.Link
-							href='/'
 							style={{
 								display: 'flex',
 								alignItems: 'center',
 							}}
+							onClick={() => history.push('/')}
 						>
 							<LogoIcon />
 							Casa Das Flores
@@ -111,11 +111,11 @@ export default function (props: { children: any }) {
 					</Col>
 					<Col xs={1} md={0}>
 						<Typography.Link
-							href='/'
 							style={{
 								display: 'flex',
 								alignItems: 'center',
 							}}
+							onClick={() => history.push('/')}
 						>
 							<LogoIcon />
 						</Typography.Link>
