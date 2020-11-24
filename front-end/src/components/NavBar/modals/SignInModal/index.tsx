@@ -16,7 +16,7 @@ import NavBarContext from '../../../../contexts/NavBarContext'
 import api from '../../../../middlewares/api'
 import { login } from '../../../../middlewares/auth'
 
-export default function () {
+export default function SignInModal() {
 	const [form] = Form.useForm()
 	const ctx = useContext(NavBarContext)
 	const [isSubmitLoading, setSubmitLoading] = useState(false)

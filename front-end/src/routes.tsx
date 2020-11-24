@@ -21,7 +21,7 @@ const ProtectedRoute: React.FC<RouteProps> = (props) => {
 	}
 }
 
-export default function () {
+export default function Routes() {
 	return (
 		<BrowserRouter>
 			<Switch>

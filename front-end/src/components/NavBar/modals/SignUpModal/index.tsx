@@ -6,9 +6,8 @@ import api from '../../../../middlewares/api'
 
 import NavBarContext from '../../../../contexts/NavBarContext'
 import ReactInputMask from 'react-input-mask'
-import { login } from '../../../../middlewares/auth'
 
-export default function () {
+export default function SignUpModal() {
 	const [form] = Form.useForm()
 	const ctx = useContext(NavBarContext)
 	const [isSubmitLoading, setSubmitLoading] = useState(false)
@@ -47,7 +46,7 @@ export default function () {
 						marginTop: '10vh',
 					},
 				})
-				ctx.setAccountModalVisible(false)
+				ctx.setModalValue('sign-in')
 				form.resetFields()
 			}
 		})
