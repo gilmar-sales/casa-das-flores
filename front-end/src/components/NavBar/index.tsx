@@ -60,6 +60,7 @@ export default function (props: { children: any }) {
 					})
 					ctx.setAccountModalVisible(true)
 					ctx.setModalValue('sign-out-success')
+					history.push('/', { from: history.location.pathname })
 				}}
 			>
 				Sair
