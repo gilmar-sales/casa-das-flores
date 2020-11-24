@@ -48,10 +48,8 @@ export default function Profile() {
 								<Row>
 									<Col sm={2} />
 									<Col sm={4} style={{ textAlign: 'center' }}>
-										<Row>
-											<Typography.Title level={3}>0</Typography.Title>
-											Total de Pedidos
-										</Row>
+										<Typography.Title level={3}>0</Typography.Title>
+										Total de Pedidos
 									</Col>
 									<Col sm={4} style={{ textAlign: 'center' }}>
 										<Typography.Title level={3}>0</Typography.Title>
