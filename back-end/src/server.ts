@@ -10,8 +10,8 @@ getConnectionOptions().then((connectionOptions) => {
 	)
 })
 
-const host = process.env.API_HOST || '0.0.0.0'
-const port = +process.env.PORT || 3333
+const host = '127.0.0.1'
+const port = 3333
 
 app.listen(port, host, () => {
 	console.log(`Server running on http://${host}:${port}`)

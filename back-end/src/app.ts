@@ -1,6 +1,5 @@
 import express, { Application } from 'express'
 import cors from 'cors'
-import path from 'path'
 
 import routes from './routes'
 
@@ -12,7 +11,6 @@ class App {
 
 		this.middlewares()
 		this.routes()
-		this.ui()
 	}
 
 	private middlewares() {
@@ -21,17 +19,7 @@ class App {
 	}
 
 	private routes() {
-		this.express.use('/api', routes)
-	}
-	private ui() {
-		this.express.use(
-			express.static(path.resolve(__dirname, '../../front-end/build'))
-		)
-		this.express.use('*', (request, response) => {
-			response.sendFile(
-				path.resolve(__dirname, '../../front-end/build', 'index.html')
-			)
-		})
+		this.express.use(routes)
 	}
 }
 
