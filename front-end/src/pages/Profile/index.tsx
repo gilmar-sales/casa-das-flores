@@ -25,11 +25,9 @@ export default function Profile() {
 	const [profile, setProfile] = useState({} as IProfile)
 	document.title = 'Casa das Flores - Profile'
 	useEffect(() => {
-		api
-			.get('/customers/profile', { data: { token: getToken() } })
-			.then((response) => {
-				setProfile(response.data)
-			})
+		api.get('/customers/profile').then((response) => {
+			setProfile(response.data)
+		})
 	}, [])
 
 	return (
