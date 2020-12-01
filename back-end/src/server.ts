@@ -10,9 +10,8 @@ getConnectionOptions().then((connectionOptions) => {
 	)
 })
 
-const host = '127.0.0.1'
 const port = 3333
 
-app.listen(port, host, () => {
-	console.log(`Server running on http://${host}:${port}`)
+app.listen(port, () => {
+	console.log(`Server running on http://127.0.0.1:${port}`)
 })
