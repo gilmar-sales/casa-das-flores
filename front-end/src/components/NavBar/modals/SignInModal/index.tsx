@@ -30,6 +30,7 @@ export default function SignInModal() {
 			} else {
 				login(response.data)
 				ctx.setModalValue('sign-in-success')
+				window.location.href = '/'
 				message.success({
 					content: 'Entrou com sucesso!',
 					style: {
