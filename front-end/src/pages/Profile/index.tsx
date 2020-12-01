@@ -63,8 +63,7 @@ export default function Profile() {
 						</Col>
 						<Divider />
 						<Col md={24}>
-							<Row>
-								<Col sm={2} />
+							<Row justify={'space-around'}>
 								<Col sm={4} style={{ textAlign: 'center' }}>
 									<Typography.Title level={3}>0</Typography.Title>
 									Total de Pedidos
