@@ -43,6 +43,11 @@ export class Customer {
 	@Column()
 	createdDate: Date
 
+	@Column({
+		nullable: true,
+	})
+	phone: string
+
 	@BeforeInsert()
 	@BeforeUpdate()
 	hashPassword() {
