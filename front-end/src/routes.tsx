@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import Home from './pages/Home'
+import Profile from './pages/Profile'
 
 import { isAuthenticated } from './middlewares/auth'
 
@@ -21,12 +22,13 @@ const ProtectedRoute: React.FC<RouteProps> = (props) => {
 	}
 }
 
-export default function () {
+export default function Routes() {
 	return (
 		<BrowserRouter>
 			<Switch>
 				<NavBar>
 					<Route path='/' exact component={Home} />
+					<ProtectedRoute path='/profile' component={Profile} />
 				</NavBar>
 			</Switch>
 		</BrowserRouter>

@@ -4,7 +4,7 @@ import Routes from './routes'
 
 import { NavBarProvider } from './contexts/NavBarContext'
 
-export default function () {
+export default function App() {
 	return (
 		<div style={{ maxWidth: '100vw' }}>
 			<NavBarProvider>

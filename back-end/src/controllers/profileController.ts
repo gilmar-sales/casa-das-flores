@@ -7,7 +7,8 @@ import jwt from 'jsonwebtoken'
 export default {
 	async read(req: Request, res: Response) {
 		const repository = getRepository(Customer)
-		const user = await repository.findOne({ where: { id: req.params.id } })
+		const auth = jwt.decode(req.headers.authorization.split(' ')[1])
+		const user = await repository.findOne({ where: { id: auth.id } })
 
 		return res.send(user)
 	},

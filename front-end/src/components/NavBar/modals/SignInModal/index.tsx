@@ -16,7 +16,7 @@ import NavBarContext from '../../../../contexts/NavBarContext'
 import api from '../../../../middlewares/api'
 import { login } from '../../../../middlewares/auth'
 
-export default function () {
+export default function SignInModal() {
 	const [form] = Form.useForm()
 	const ctx = useContext(NavBarContext)
 	const [isSubmitLoading, setSubmitLoading] = useState(false)
@@ -30,6 +30,7 @@ export default function () {
 			} else {
 				login(response.data)
 				ctx.setModalValue('sign-in-success')
+				window.location.href = '/'
 				message.success({
 					content: 'Entrou com sucesso!',
 					style: {
