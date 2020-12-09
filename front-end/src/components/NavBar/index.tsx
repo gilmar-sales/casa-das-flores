@@ -1,241 +1,159 @@
-import React, { useContext } from 'react'
+import React, { useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
 import {
-	Layout,
-	Input,
-	Row,
-	Col,
-	Button,
-	Tooltip,
-	Menu,
-	Dropdown,
-	Typography,
-	message,
-	Avatar,
-} from 'antd'
-import {
-	ShoppingOutlined,
-	HeartOutlined,
-	MessageOutlined,
-	SearchOutlined,
-	UserOutlined,
-} from '@ant-design/icons'
-import NavBarContext from '../../contexts/NavBarContext'
+  HiOutlineChatAlt,
+  HiOutlineHeart,
+  HiOutlineShoppingBag,
+  HiSearch,
+} from "react-icons/hi";
 
 import {
-	isAuthenticated,
-	logout,
-	NAME_KEY,
-	LAST_NAME_KEY,
-	PROFILE_PICTURE_KEY,
-} from '../../middlewares/auth'
-import { useHistory } from 'react-router-dom'
+  isAuthenticated,
+  logout,
+  NAME_KEY,
+  LAST_NAME_KEY,
+  PROFILE_PICTURE_KEY,
+} from "../../middlewares/auth";
+import { useHistory } from "react-router-dom";
 
-import SignInModal from './modals/SignInModal'
-import SignUpModal from './modals/SignUpModal'
-import LogoIcon from '../../icons/Logo'
-
-const { Header, Content, Footer } = Layout
-const { Search } = Input
+import ReactTooltip from "react-tooltip";
+import Modal from "../Modal";
 
 export default function (props: { children: any }) {
-	const ctx = useContext(NavBarContext)
-	const history = useHistory()
-	const search = React.createRef<Input>()
-	const mobileSearch = React.createRef<Input>()
+  const history = useHistory();
 
-	const accountMenu = isAuthenticated() ? (
-		<Menu>
-			<Menu.Item key='1' onClick={() => history.push('/profile')}>
-				Perfil
-			</Menu.Item>
-			<Menu.Item
-				key='2'
-				onClick={() => {
-					logout()
-					message.success({
-						content: 'Saiu com sucesso!',
-						style: {
-							marginTop: '10vh',
-						},
-					})
-					ctx.setAccountModalVisible(true)
-					ctx.setModalValue('sign-out-success')
-					history.push('/', { from: history.location.pathname })
-				}}
-			>
-				Sair
-			</Menu.Item>
-		</Menu>
-	) : (
-		<Menu>
-			<Menu.Item
-				key='1'
-				onClick={() => {
-					ctx.setAccountModalVisible(true)
-					ctx.setModalValue('sign-in')
-				}}
-			>
-				Entrar
-			</Menu.Item>
-			<Menu.Item
-				key='2'
-				onClick={() => {
-					ctx.setAccountModalVisible(true)
-					ctx.setModalValue('sign-up')
-				}}
-			>
-				Inscrever-se
-			</Menu.Item>
-		</Menu>
-	)
+  const [searchText, setSearchText] = useState("");
+  const [showAccDropdown, setShowAccDropDown] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-	return (
-		<Layout>
-			<Header style={{ height: '100%', padding: '0px 8px' }}>
-				<Row
-					align='middle'
-					justify='space-between'
-					wrap={false}
-					style={{ flexGrow: 1 }}
-				>
-					<Col xs={0} md={6}>
-						<Typography.Link
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-							}}
-							onClick={() => history.push('/')}
-						>
-							<LogoIcon />
-							Casa Das Flores
-						</Typography.Link>
-					</Col>
-					<Col xs={1} md={0}>
-						<Typography.Link
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-							}}
-							onClick={() => history.push('/')}
-						>
-							<LogoIcon />
-						</Typography.Link>
-					</Col>
-					<Col xs={0} sm={8}>
-						<Row align='middle'>
-							<Search
-								placeholder='Procurando alguma coisa?'
-								allowClear
-								enterButton={<SearchOutlined style={{ fontSize: 24 }} />}
-								ref={search}
-								onChange={(event) =>
-									mobileSearch.current?.setValue(event.target.value)
-								}
-							/>
-						</Row>
-					</Col>
+  const handleAccount = () => {
+    setShowAccDropDown(!showAccDropdown);
+  };
 
-					<Col>
-						<Row wrap={false} gutter={[10, 0]}>
-							<Col>
-								<Tooltip placement='left' title='Suporte'>
-									<Button
-										type='primary'
-										shape='circle'
-										icon={<MessageOutlined style={{ fontSize: 24 }} />}
-										size={'large'}
-									/>
-								</Tooltip>
-							</Col>
-							<Col>
-								<Tooltip title='Lista de desejos'>
-									<Button
-										type='primary'
-										shape='circle'
-										icon={<HeartOutlined style={{ fontSize: 24 }} />}
-										size={'large'}
-									/>
-								</Tooltip>
-							</Col>
-							<Col>
-								<Tooltip title='Cesta de compras'>
-									<Button
-										type='primary'
-										shape='circle'
-										icon={<ShoppingOutlined style={{ fontSize: 24 }} />}
-										size={'large'}
-									/>
-								</Tooltip>
-							</Col>
-							<Col>
-								<Tooltip placement='right' title='Conta'>
-									<Dropdown overlay={accountMenu} trigger={['click']}>
-										{isAuthenticated() ? (
-											localStorage.getItem(PROFILE_PICTURE_KEY) === null ? (
-												<Avatar
-													src={localStorage.getItem(PROFILE_PICTURE_KEY)}
-													size={40}
-													style={{ cursor: 'pointer', marginTop: -5 }}
-												></Avatar>
-											) : (
-												<Avatar
-													size={40}
-													style={{
-														backgroundColor: '#13AE7A',
-														cursor: 'pointer',
-														marginTop: -5,
-													}}
-												>
-													{localStorage
-														.getItem(NAME_KEY)
-														?.charAt(0)
-														.toUpperCase()}
-													{localStorage
-														.getItem(LAST_NAME_KEY)
-														?.charAt(0)
-														.toUpperCase()}
-												</Avatar>
-											)
-										) : (
-											<Button
-												type='primary'
-												shape='circle'
-												icon={<UserOutlined style={{ fontSize: 24 }} />}
-												size={'large'}
-											/>
-										)}
-									</Dropdown>
-								</Tooltip>
-							</Col>
-						</Row>
-					</Col>
-				</Row>
-				<Row
-					align='middle'
-					justify='center'
-					wrap={false}
-					style={{ flexGrow: 1 }}
-					gutter={[10, 10]}
-				>
-					<Col xs={20} sm={0}>
-						<Row align='middle'>
-							<Search
-								placeholder='Procurando alguma coisa?'
-								allowClear
-								ref={mobileSearch}
-								enterButton={<SearchOutlined style={{ fontSize: 24 }} />}
-								size='large'
-								onChange={(event) =>
-									search.current?.setValue(event.target.value)
-								}
-							/>
-						</Row>
-					</Col>
-				</Row>
-			</Header>
-			<Content>{props.children}</Content>
-			<Footer>casa das flores - 2020</Footer>
-			<SignInModal /> <SignUpModal />
-		</Layout>
-	)
+  return (
+    <div>
+      <ReactTooltip place="bottom" effect="solid" globalEventOff="hover" />
+      <nav className="flex justify-between py-2 text-green-500 border-dashed md:border-b-2 border-green-100 ">
+        {/* Brand Section*/}
+        <div className="flex items-center px-2 sm:px-4 lg:px-6">
+          <a className="cursor-pointer" onClick={() => history.push("/")}>
+            Casa das Flores
+          </a>
+        </div>
+        {/* Mid Section */}
+        <div className="flex items-center hidden md:block">
+          <div className="flex">
+            <input
+              type="text"
+              name="search"
+              id="search"
+              className="w-full px-3 border rounded-none rounded-l-md border-gray-400"
+              placeholder="Procurando alguma coisa?"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <button className="px-4 py-1 rounded-r-md border border-l-0 border-green-500 bg-green-50 hover:bg-green-400 hover:text-green-50">
+              <HiSearch className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+        {/* Right Section*/}
+        <div className="flex px-2 sm:px-4 lg:px-6 space-x-2 text-white select-none">
+          <button
+            className="bg-green-500 h-10 w-10 p-2 rounded-full "
+            data-tip="Suporte"
+          >
+            <HiOutlineChatAlt className="h-6 w-6" />
+          </button>
+          <button
+            className="bg-green-500 h-10 w-10 p-2 rounded-full "
+            data-tip="Desejos"
+          >
+            <HiOutlineHeart className="h-6 w-6" />
+          </button>
+          <button
+            className="bg-green-500 h-10 w-10 p-2 rounded-full"
+            data-tip="Cesta"
+          >
+            <HiOutlineShoppingBag className="h-6 w-6" />
+          </button>
+          <div className="relative">
+            <Menu>
+              {({ open }) => (
+                <>
+                  <Menu.Button
+                    className="bg-green-500 h-10 w-10 rounded-full"
+                    data-tip="Conta"
+                  >
+                    GC
+                  </Menu.Button>
+                  <Transition
+                    show={open}
+                    enter="transition ease-out duration-200"
+                    enterFrom="transform opacity-0 scale-50"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-150"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-50"
+                  >
+                    <Menu.Items
+                      static
+                      className="absolute right-0 w-36 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                    >
+                      <div className="py-1">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              className={`${
+                                active
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "text-gray-700"
+                              } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                              onClick={() => setShowModal(true)}
+                            >
+                              Entrar
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#support"
+                              className={`${
+                                active
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "text-gray-700"
+                              } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                            >
+                              Inscrever-se
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </>
+              )}
+            </Menu>
+          </div>
+        </div>
+      </nav>
+      {/* Mobile Section */}
+      <div className="flex justify-center md:hidden  text-green-500 py-2 border-dashed border-b-2 border-green-100">
+        <form className="flex" action="#" method="POST">
+          <input
+            type="text"
+            name="company_website"
+            id="company_website"
+            className="flex-1 w-full px-3 border  rounded-none rounded-l-md border-gray-400"
+            placeholder="Procurando alguma coisa?"
+          />
+          <button className="px-4 py-1 rounded-r-md border border-l-0 border-green-500 bg-green-50 hover:bg-green-400 hover:text-green-50">
+            <HiSearch className="h-6 w-6" />
+          </button>
+        </form>
+      </div>
+      <Modal title="Entrar" isOpen={showModal} setOpen={setShowModal} />
+    </div>
+  );
 }
