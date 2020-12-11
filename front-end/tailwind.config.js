@@ -763,6 +763,7 @@ module.exports = {
       "focus-within",
       "hover",
       "focus",
+      "checked",
     ],
     backgroundImage: ["responsive"],
     backgroundOpacity: [
@@ -912,5 +913,6 @@ module.exports = {
     wordBreak: ["responsive"],
     zIndex: ["responsive", "focus-within", "focus"],
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')],
 };
