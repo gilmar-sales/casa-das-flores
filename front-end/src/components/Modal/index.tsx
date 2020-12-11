@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = (props) => {
   return (
     <Transition
       show={props.isOpen}
-      enter="transition ease-linear duration-75"
+      enter="transition ease-linear duration-150"
       enterFrom="opacity-0 scale-100"
       enterTo="opacity-100 scale-100"
       leave="transition ease-in duration-200"
@@ -22,7 +22,7 @@ const Modal: React.FC<ModalProps> = (props) => {
     >
       <div
         className={
-          "flex justify-center items-center overflow-y-auto fixed inset-0 z-50 p-2 bg-opacity-50 bg-black"
+          "flex flex-col justify-center overflow-y-auto fixed inset-0 z-50 p-2 bg-opacity-50 bg-black"
         }
       >
         <Transition
@@ -34,7 +34,7 @@ const Modal: React.FC<ModalProps> = (props) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-50"
         >
-          <div className="flex flex-col bg-white rounded-lg  relative w-auto mx-auto max-w-3xl ">
+          <div className="flex flex-col bg-white rounded-lg  relative max-w-2xl mx-auto ">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-2 border-b  border-gray-100 text-2xl">
               <a>{props.title}</a>
