@@ -1,94 +1,51 @@
-import {
-	Card,
-	Col,
-	Menu,
-	Row,
-	Typography,
-	Avatar,
-	Descriptions,
-	Divider,
-} from 'antd'
-import React, { useEffect, useState } from 'react'
-import api from '../../middlewares/api'
-import { getToken } from '../../middlewares/auth'
-
-interface IProfile {
-	id: number
-	firstName: string
-	lastName: string
-	profilePicture: string
-	email: string
-	phone: string
-}
+import React from 'react'
 
 export default function Profile() {
-	const [profile, setProfile] = useState({} as IProfile)
-	document.title = 'Casa das Flores - Profile'
-	useEffect(() => {
-		api.get('/customers/profile').then((response) => {
-			setProfile(response.data)
-		})
-	}, [])
-
 	return (
-		<Row justify={'space-around'}>
-			<Col md={6} xs={24}>
-				<Menu defaultSelectedKeys={['1']} mode='inline'>
-					<Menu.Item key='1'>Meus Dados</Menu.Item>
-					<Menu.Item key='2'>Meus Pedidos</Menu.Item>
-				</Menu>
-			</Col>
-			<Col md={17}>
-				<Card>
-					<Row>
-						<Col md={6}>
-							<Avatar size={62} src={profile.profilePicture} />
-							<Typography>
-								{profile.firstName} {profile.lastName}
-							</Typography>
-						</Col>
-
-						<Col md={18}>
-							<Descriptions column={2}>
-								<Descriptions.Item label='Telefone'>
-									{profile.phone}
-								</Descriptions.Item>
-								<Descriptions.Item label='Cidade'>
-									São Luís de Montes Belos
-								</Descriptions.Item>
-								<Descriptions.Item label='Endereço'>
-									Rua Biriri, Jardim Disney Lândia, S/N, Qd. 6 Lt. 6
-								</Descriptions.Item>
-							</Descriptions>
-						</Col>
-						<Divider />
-						<Col md={24}>
-							<Row justify={'space-around'}>
-								<Col sm={4} style={{ textAlign: 'center' }}>
-									<Typography.Title level={3}>0</Typography.Title>
-									Total de Pedidos
-								</Col>
-								<Col sm={4} style={{ textAlign: 'center' }}>
-									<Typography.Title level={3}>0</Typography.Title>
-									Pagamentos Pendentes
-								</Col>
-								<Col sm={4} style={{ textAlign: 'center' }}>
-									<Typography.Title level={3}>0</Typography.Title>
-									Envios Pendentes
-								</Col>
-								<Col sm={4} style={{ textAlign: 'center' }}>
-									<Typography.Title level={3}>0</Typography.Title>
-									Aguardando Entrega
-								</Col>
-								<Col sm={4} style={{ textAlign: 'center' }}>
-									<Typography.Title level={3}>0</Typography.Title>
-									Avaliações Pendentes
-								</Col>
-							</Row>
-						</Col>
-					</Row>
-				</Card>
-			</Col>
-		</Row>
+		<div className='grid grid-cols-6 gap-4 px-4'>
+			{/* Menu */}
+			<div className='col-span-6 sm:col-span-1 rounded-md border py-2'>
+				Menu
+			</div>
+			{/* Profile */}
+			<div className='col-span-6 sm:col-span-5 rounded-md border p-2'>
+				<div className='grid grid-cols-6'>
+					<div className='col-span-6 md:col-span-2'>
+						<div className='flex justify-center items-center rounded-full bg-green-500 text-white h-16 w-16 text-2xl select-none'>
+							GC
+						</div>
+						<div>Gilmar Custodio</div>
+					</div>
+					<div className='col-span-6 md:col-span-4 grid grid-cols-2'>
+						<div className='col-span-2 sm:col-span-1'>Telefone</div>
+						<div className='col-span-2 sm:col-span-1'>Cidade</div>
+						<div className='col-span-2 sm:col-span-2'>Endereço</div>
+					</div>
+				</div>
+				<div className='w-full h-1 border-b' />
+				<div className='grid grid-cols-5 pt-4 gap-4'>
+					<div className='col-span-5 sm:col-span-2 md:col-span-1 flex items-center flex-col '>
+						<span className='text-3xl font-bold'>0</span>
+						<span className='text-center'>Total de Pedidos</span>
+					</div>
+					<div className='col-span-5 sm:col-span-2 md:col-span-1 flex items-center flex-col'>
+						<span className='text-3xl font-bold '>0</span>
+						<span className='text-center'>Pagamentos Pendentes</span>
+					</div>
+					<div className='col-span-5 sm:col-span-2 md:col-span-1 flex items-center flex-col'>
+						<span className='text-3xl font-bold'>0</span>
+						<span className='text-center'>Envios Pendentes</span>
+					</div>
+					<div className='col-span-5 sm:col-span-2 md:col-span-1 flex items-center flex-col'>
+						<span className='text-3xl font-bold'>0</span>
+						<span className='text-center'>Aguardando Entrega</span>
+					</div>
+					<div className='col-span-5 sm:col-span-2 md:col-span-1  flex items-center flex-col'>
+						<span className='text-3xl font-bold'>0</span>
+						<span className='text-center'>Avaliações Pendentes</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	)
 }

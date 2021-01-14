@@ -7,12 +7,11 @@ import {
 	Redirect,
 } from 'react-router-dom'
 
-import Home from './pages/Home'
-import Profile from './pages/Profile'
-
 import { isAuthenticated } from './middlewares/auth'
 
 import NavBar from './components/NavBar'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
 
 const ProtectedRoute: React.FC<RouteProps> = (props) => {
 	if (!isAuthenticated()) {

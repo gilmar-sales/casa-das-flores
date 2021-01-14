@@ -1,15 +1,16 @@
 import React from 'react'
-import 'antd/dist/antd.less'
 import Routes from './routes'
 
-import { NavBarProvider } from './contexts/NavBarContext'
+import { SignProvider } from './contexts/SignContext'
 
-export default function App() {
+function App() {
 	return (
-		<div style={{ maxWidth: '100vw' }}>
-			<NavBarProvider>
+		<div className='App '>
+			<SignProvider>
 				<Routes />
-			</NavBarProvider>
+			</SignProvider>
 		</div>
 	)
 }
+
+export default App

@@ -1,0 +1,7 @@
+:root {
+	--swiper-theme-color: #10b981;
+}
+
+.swiper-pagination-bullet {
+	opacity: 0.75;
+}
