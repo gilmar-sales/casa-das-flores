@@ -4,30 +4,24 @@ import { Customer } from '../entity/Customer'
 
 export default {
 	async create(req: Request, res: Response) {
-		const { firstName, lastName, email, password } = req.body
+		const { first_name, last_name, email, password, cpf } = req.body
 
 		const repository = getRepository(Customer)
 
-		const emailFeedback = {
-			name: 'email',
-			errors: [],
-		}
-
-		const feedback = [emailFeedback]
-
 		const customerExists = await repository.findOne({ where: { email } })
 
-		if (customerExists) {
-			emailFeedback.errors.push(
-				'Email já está sendo utilizado por outro usuário'
-			)
-			return res.send({ errors: feedback })
-		}
+		if (customerExists)
+			return res.send({
+				errors: {
+					email: 'Email já está sendo utilizado por outro usuário',
+				},
+			})
 
 		const customer = repository.create({
-			firstName: firstName,
-			lastName: lastName,
+			firstName: first_name,
+			lastName: last_name,
 			email: email,
+			cpf: cpf,
 			password: password,
 			createdDate: new Date(Date.now()),
 		})
