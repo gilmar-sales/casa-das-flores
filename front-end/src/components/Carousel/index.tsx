@@ -61,7 +61,7 @@ export default function Carousel(props: HTMLProps<HTMLDivElement>) {
 					className='bg-gray-500 h-60 bg-cover'
 					style={{
 						backgroundImage: `url(${
-							process.env.PUBLIC_URL + '/images/products/buque.jpg'
+							process.env.PUBLIC_URL + '/images/products/buque_rosas.jpg'
 						})`,
 						height: height,
 					}}

@@ -14,6 +14,22 @@ export default function Home() {
 			image: '/images/products/buque_rosas.jpg',
 			category: 'Rosas',
 		},
+		{
+			id: 1,
+			name: 'Buquê de Astromelias',
+			description: 'Id laboris anim magna laboris eu veniam laborum id esse.',
+			price: 0,
+			image: '/images/products/buque_astromelias.jpg',
+			category: 'Rosas',
+		},
+		{
+			id: 2,
+			name: 'Buquê de Flores Mistas',
+			description: 'Id laboris anim magna laboris eu veniam laborum id esse.',
+			price: 0,
+			image: '/images/products/buque_flores_mistas.jpg',
+			category: 'Rosas',
+		},
 	]
 
 	return (
@@ -26,9 +42,9 @@ export default function Home() {
 			</div>
 			{/* Products */}
 			<div className='grid grid-cols-12 gap-4 px-4 my-4'>
-				{[...Array(12)].map((value) => (
+				{[...Array(12)].map((value, index) => (
 					<div key={value} className='col-span-12 sm:col-span-6 md:col-span-3'>
-						<ProductCard product={products[0]} />
+						<ProductCard product={products[index % products.length]} />
 					</div>
 				))}
 			</div>
