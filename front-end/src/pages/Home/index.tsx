@@ -11,7 +11,7 @@ export default function Home() {
 			name: 'Buquê de Rosas',
 			description: 'Id laboris anim magna laboris eu veniam laborum id esse.',
 			price: 0,
-			image: '/images/products/buque.jpg',
+			image: '/images/products/buque_rosas.jpg',
 			category: 'Rosas',
 		},
 	]
