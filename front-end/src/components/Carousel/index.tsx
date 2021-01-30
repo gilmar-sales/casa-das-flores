@@ -1,80 +1,58 @@
-import React, { HTMLProps, useState } from 'react'
+import React from 'react'
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi'
-import ReactIdSwiper from 'react-id-swiper/lib/ReactIdSwiper.custom'
-import 'swiper/swiper-bundle.min.css'
-import { Swiper, Navigation, Pagination } from 'swiper'
-import { ReactIdSwiperCustomProps } from 'react-id-swiper/lib/types'
+import {
+	CarouselProvider,
+	Slider,
+	Slide,
+	ButtonBack,
+	ButtonNext,
+	CarouselProviderProps,
+	DotGroup,
+	Image,
+} from 'pure-react-carousel'
 
-import './styles.css'
+import 'pure-react-carousel/dist/react-carousel.es.css'
 
-export default function Carousel(props: HTMLProps<HTMLDivElement>) {
-	const slides = [
-		'/images/products/buque.jpg',
-		'/images/products/buque.jpg',
-		'/images/products/buque.jpg',
-		'/images/products/buque.jpg',
-	]
+interface CarouselProps extends Omit<CarouselProviderProps, 'children'> {
+	slides: string[]
+	className?: string
+}
 
-	const [width, setWidth] = useState(600)
-	const [height, setHeight] = useState('15rem')
-
-	const params: ReactIdSwiperCustomProps = {
-		Swiper,
-		modules: [Navigation, Pagination],
-		initialSlide: 0,
-		pagination: {
-			el: '.swiper-pagination',
-			type: 'bullets',
-			clickable: true,
-		},
-		navigation: {
-			nextEl: '#button-next',
-			prevEl: '#button-prev',
-		},
-		autoplay: {
-			delay: 100,
-			disableOnInteraction: false,
-		},
-		loop: true,
-		renderNextButton: () => (
-			<button
-				id='button-next'
-				className='bg-white text-green-500 shadow-md rounded-full p-2 absolute top-1/2 right-2 z-10 text-2xl'
-			>
-				<HiArrowRight />
-			</button>
-		),
-		renderPrevButton: () => (
-			<button
-				id='button-prev'
-				className='bg-white text-green-500 shadow-md rounded-full p-2 absolute top-1/2 left-2 z-10 text-2xl'
-			>
-				<HiArrowLeft />
-			</button>
-		),
-	}
-
+const Carousel: React.FC<CarouselProps> = (props) => {
 	return (
-		<div className='w-full'>
-			<ReactIdSwiper {...params}>
-				<div
-					className='bg-gray-500 h-60 bg-cover'
-					style={{
-						backgroundImage: `url(${
-							process.env.PUBLIC_URL + '/images/products/buque_rosas.jpg'
-						})`,
-						height: height,
-					}}
+		<CarouselProvider className='relative' infinite={true} {...props}>
+			<Slider>
+				{props.slides.map((slide, index) => (
+					<Slide key={index} index={index}>
+						<Image
+							isBgImage
+							hasMasterSpinner
+							src={slide}
+							style={{ height: 'auto' }}
+						/>
+					</Slide>
+				))}
+				<DotGroup />
+			</Slider>
+
+			<ButtonBack>
+				<button
+					id='button-prev'
+					className='bg-white opacity-30 text-green-500 shadow-md rounded-full p-2 absolute top-1/2 left-2 z-10 text-2xl hover:opacity-40'
 				>
-					Slide 1
-				</div>
-				<div className='bg-gray-500 h-60' style={{ height: height }}>
-					Slide 2
-				</div>
-				<div className='bg-gray-500 h-60' style={{ height: height }}>
-					Slide 3
-				</div>
-			</ReactIdSwiper>
-		</div>
+					<HiArrowLeft />
+				</button>
+			</ButtonBack>
+			<ButtonNext>
+				<button
+					id='button-next'
+					className='bg-white opacity-30 text-green-500 shadow-md rounded-full p-2 absolute top-1/2 right-2 z-10 text-2xl hover:opacity-40'
+				>
+					<HiArrowRight />
+				</button>
+			</ButtonNext>
+		</CarouselProvider>
 	)
 }
+
+export default Carousel
