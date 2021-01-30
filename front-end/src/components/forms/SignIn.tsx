@@ -7,6 +7,7 @@ import { object, string } from 'yup'
 import Logo from '../../icons/Logo'
 import api from '../../middlewares/api'
 import { login } from '../../middlewares/auth'
+import { Link } from 'react-router-dom'
 
 export default function SignIn() {
 	const initialValues = { email: '', password: '', remember_me: false }
@@ -23,13 +24,13 @@ export default function SignIn() {
 		<div>
 			<div className='flex flex-col items-center'>
 				<Logo className='h-16 w-16 stroke-current text-green-600' />
-				<a className='text-center text-3xl font-extrabold text-gray-900'>
+				<h1 className='text-center text-3xl font-extrabold text-gray-900'>
 					Entre com seus dados
-				</a>
+				</h1>
 				<p className='mt-2 text-center text-sm text-gray-600'>
 					{'Ou '}
 					<a
-						href='#'
+						href='/auth'
 						className='font-medium text-green-600 hover:text-green-500'
 					>
 						entre com google
@@ -128,12 +129,12 @@ export default function SignIn() {
 							</div>
 
 							<div className='text-sm'>
-								<a
-									href='#'
+								<Link
 									className='font-medium text-green-600 hover:text-green-500'
+									to='/forgot-password'
 								>
 									Esqueceu sua senha?
-								</a>
+								</Link>
 							</div>
 						</div>
 

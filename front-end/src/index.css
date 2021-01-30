@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 * {
   -webkit-tap-highlight-color: transparent;
   -moz-tap-highlight-color: transparent;
   -o-tap-highlight-color: transparent;
+  font-family: 'Poppins';
 }
 
 *:focus {

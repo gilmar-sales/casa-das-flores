@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
 
+import slugify from '../utils/slugify'
+
 import { Product } from '../entity/Product'
 import { Picture } from '../entity/Picture'
 
@@ -10,12 +12,13 @@ export default {
 			name,
 			description,
 			unitPrice,
-			picturesPaths,
 			width,
 			height,
 			depth,
 			category,
 		} = req.body
+
+		const slug = slugify(name)
 
 		const productRepository = getRepository(Product)
 		const pictureRepository = getRepository(Picture)
@@ -32,6 +35,7 @@ export default {
 
 		const product = productRepository.create({
 			name: name,
+			slug: slug,
 			description: description,
 			unitPrice: unitPrice,
 			width: width,
@@ -41,13 +45,15 @@ export default {
 			category: category,
 		})
 
-		await productRepository.save(product)
+		await productRepository.save(product).catch((error) => {
+			return res.send(error)
+		})
 
-		picturesPaths.map((path) => {
+		/*picturesPaths.map((path) => {
 			const picture = pictureRepository.create({ path: path, product: product })
 			pictureRepository.save(picture)
 			pictures.push(picture)
-		})
+		})*/
 
 		return res.send(product)
 	},
@@ -71,6 +77,19 @@ export default {
 			pages: Math.ceil(products[1] / productsPerPage),
 			products: products[0],
 		})
+	},
+	async view(req: Request, res: Response) {
+		const { slug } = req.params
+
+		const repository = getRepository(Product)
+
+		const product = await repository.findOne({ slug: slug }).catch((error) => {
+			res.send(error)
+		})
+
+		if (!product) return res.sendStatus(404)
+
+		return res.send(product)
 	},
 	async update(req: Request, res: Response) {},
 	async delete(req: Request, res: Response) {},

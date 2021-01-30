@@ -14,17 +14,18 @@ routes.get('/', (req, res) => {
 })
 
 routes.post('/customers', CustomerController.create)
-routes.get('/customers', CustomerController.read)
-routes.put('/customers/:id', CustomerController.update)
-routes.delete('/customers/:id', CustomerController.delete)
+routes.get('/customers', authMiddleware, CustomerController.read)
+routes.put('/customers', authMiddleware, CustomerController.update)
+routes.delete('/customers/:id', authMiddleware, CustomerController.delete)
 
 routes.post('/customers/profile/auth', ProfileController.authenticate)
 routes.get('/customers/profile', authMiddleware, ProfileController.read)
 
 routes.post('/products', ProductController.create)
 routes.get('/products/:page', ProductController.read)
+routes.get('/product/:slug', ProductController.view)
 
-routes.post('/categories', CategoryController.create)
+routes.post('/categories', authMiddleware, CategoryController.create)
 routes.get('/categories', CategoryController.read)
 
 export default routes

@@ -7,8 +7,7 @@ import jwt from 'jsonwebtoken'
 export default {
 	async read(req: Request, res: Response) {
 		const repository = getRepository(Customer)
-		const auth = jwt.decode(req.headers.authorization.split(' ')[1])
-		const user = await repository.findOne({ where: { id: auth.id } })
+		const user = await repository.findOne({ where: { id: req.userId } })
 
 		return res.send(user)
 	},
@@ -32,7 +31,16 @@ export default {
 			return res.send({ errors: { password: 'Senha incorreta.' } })
 		}
 
-		const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1d' })
+		const token = jwt.sign(
+			{ id: user.id, role: user.role },
+			process.env.JWT_PRIVATE_KEY,
+			{
+				expiresIn: '1d',
+				algorithm: 'RS256',
+			}
+		)
+
+		delete user.password
 
 		return res.send({ user, token })
 	},

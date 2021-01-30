@@ -33,6 +33,8 @@ export default {
 		return res.json(customer)
 	},
 	async read(req: Request, res: Response) {
+		if (req.userRole !== 'admin') return res.send(401)
+
 		const customers = await getConnection('default').manager.find(Customer)
 
 		return res.send(customers)
@@ -40,20 +42,39 @@ export default {
 	async update(req: Request, res: Response) {
 		const repository = getRepository(Customer)
 
-		await repository
-			.createQueryBuilder()
-			.update()
-			.where('id = :id', { id: req.params.id })
-			.set({
-				...req.body,
-			})
-			.execute()
-			.then((result) => {
-				res.sendStatus(200)
-			})
-			.catch((error) => {
-				res.status(400).send(error.detail)
-			})
+		if (req.userRole === 'user') {
+			await repository
+				.createQueryBuilder()
+				.update()
+				.where('id = :id', { id: req.userId })
+				.set({
+					...req.body,
+				})
+				.execute()
+				.then((result) => {
+					res.sendStatus(200)
+				})
+				.catch((error) => {
+					res.status(400).send(error.detail)
+				})
+		} else {
+			const { id, ...data } = req.body
+
+			await repository
+				.createQueryBuilder()
+				.update()
+				.where('id = :id', { id: id })
+				.set({
+					...data,
+				})
+				.execute()
+				.then((result) => {
+					res.sendStatus(200)
+				})
+				.catch((error) => {
+					res.status(400).send(error.detail)
+				})
+		}
 	},
 	async delete(req: Request, res: Response) {
 		const repository = getRepository(Customer)

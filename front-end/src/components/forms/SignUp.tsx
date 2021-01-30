@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { object, string } from 'yup'
 
 import api from '../../middlewares/api'
+import { Link } from 'react-router-dom'
 
 export default function SignIn() {
 	const initialValues = {
@@ -44,17 +45,17 @@ export default function SignIn() {
 		<div>
 			<div className='flex flex-col items-center'>
 				<HiUserAdd className='h-16 w-16 stroke-current text-green-600' />
-				<a className='text-center text-3xl font-extrabold text-gray-900'>
+				<h1 className='text-center text-3xl font-extrabold text-gray-900'>
 					Forneça seus dados
-				</a>
+				</h1>
 				<p className='mt-2 text-center text-sm text-gray-600'>
 					{'Ou '}
-					<a
-						href='#'
+					<Link
+						to=''
 						className='font-medium text-green-600 hover:text-green-500'
 					>
 						inscreva-se com o google
-					</a>
+					</Link>
 				</p>
 			</div>
 			<Formik
