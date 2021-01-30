@@ -32,7 +32,15 @@ export default {
 			return res.send({ errors: { password: 'Senha incorreta.' } })
 		}
 
-		const token = jwt.sign({ id: user.id }, 'secret', { expiresIn: '1d' })
+		const token = jwt.sign(
+			{ id: user.id, role: user.role },
+			process.env.JWT_PRIVATE_KEY,
+			{
+				expiresIn: '1d',
+				algorithm: 'RS256',
+			}
+		)
+
 
 		return res.send({ user, token })
 	},
