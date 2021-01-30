@@ -87,6 +87,8 @@ export default {
 			res.send(error)
 		})
 
+		if (!product) return res.sendStatus(404)
+
 		return res.send(product)
 	},
 	async update(req: Request, res: Response) {},
