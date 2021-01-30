@@ -14,8 +14,11 @@ export class Product {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@Column({ unique: true })
+	@Column()
 	name: string
+
+	@Column({ unique: true })
+	slug: string
 
 	@Column()
 	description: string
@@ -37,13 +40,13 @@ export class Product {
 	})
 	active: boolean
 
-	@Column({ nullable: true })
+	@Column('decimal', { nullable: true, precision: 10, scale: 2 })
 	width: number
 
-	@Column({ nullable: true })
+	@Column('decimal', { nullable: true, precision: 10, scale: 2 })
 	height: number
 
-	@Column({ nullable: true })
+	@Column('decimal', { nullable: true, precision: 10, scale: 2 })
 	depth: number
 
 	@Column()
