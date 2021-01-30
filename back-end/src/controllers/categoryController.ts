@@ -5,6 +5,8 @@ import { Category } from '../entity/Category'
 
 export default {
 	async create(req: Request, res: Response) {
+		if (req.userRole !== 'admin') return res.sendStatus(401)
+
 		const { name, description, picture } = req.body
 
 		const repository = getRepository(Category)
@@ -16,7 +18,7 @@ export default {
 		})
 
 		await repository.save(category).catch((error) => {
-			res.send(error)
+			return res.send(error)
 		})
 
 		return res.send(category)
