@@ -12,6 +12,7 @@ import { isAuthenticated } from './middlewares/auth'
 import NavBar from './components/NavBar'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import ProductOverview from './pages/ProductOverview'
 import NotFound from './pages/NotFound'
 
 const ProtectedRoute: React.FC<RouteProps> = (props) => {
@@ -29,6 +30,7 @@ export default function Routes() {
 				<NavBar>
 					<Switch>
 						<Route path='/' exact component={Home} />
+						<Route path='/product/:slug' component={ProductOverview} />
 
 						<ProtectedRoute path='/profile' component={Profile} />
 
