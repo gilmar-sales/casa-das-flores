@@ -12,6 +12,7 @@ import { isAuthenticated } from './middlewares/auth'
 import NavBar from './components/NavBar'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import NotFound from './pages/NotFound'
 
 const ProtectedRoute: React.FC<RouteProps> = (props) => {
 	if (!isAuthenticated()) {
@@ -26,8 +27,13 @@ export default function Routes() {
 		<BrowserRouter>
 			<Switch>
 				<NavBar>
-					<Route path='/' exact component={Home} />
-					<ProtectedRoute path='/profile' component={Profile} />
+					<Switch>
+						<Route path='/' exact component={Home} />
+
+						<ProtectedRoute path='/profile' component={Profile} />
+
+						<Route component={NotFound} />
+					</Switch>
 				</NavBar>
 			</Switch>
 		</BrowserRouter>
