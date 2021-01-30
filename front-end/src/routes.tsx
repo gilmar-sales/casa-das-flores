@@ -15,18 +15,22 @@ import Profile from './pages/Profile'
 import ProductOverview from './pages/ProductOverview'
 import NotFound from './pages/NotFound'
 
-const ProtectedRoute: React.FC<RouteProps> = (props) => {
-	if (!isAuthenticated()) {
-		return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
-	} else {
-		return <Route {...props} />
-	}
+const ProtectedRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
+	const routeComponent = (props: any) =>
+		!isAuthenticated() ? (
+			<Redirect to={{ pathname: '/', state: { from: props.location } }} />
+		) : (
+			React.createElement(component as React.FunctionComponent, props)
+		)
+
+	return <Route {...rest} render={routeComponent} />
 }
 
 export default function Routes() {
 	return (
 		<BrowserRouter>
 			<Switch>
+				<ProtectedRoute path='/dashboard' component={NotFound}></ProtectedRoute>
 				<NavBar>
 					<Switch>
 						<Route path='/' exact component={Home} />
