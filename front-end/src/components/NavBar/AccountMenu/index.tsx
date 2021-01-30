@@ -15,7 +15,6 @@ export default function AccountMenu() {
 	useEffect(() => {
 		api.get('/customers/profile').then((response) => {
 			setProfile(response.data)
-			console.log(profile)
 		})
 	}, [])
 
@@ -73,6 +72,22 @@ export default function AccountMenu() {
 											</Link>
 										)}
 									</Menu.Item>
+									{profile.role === 'admin' && (
+										<Menu.Item>
+											{({ active }) => (
+												<Link
+													className={`${
+														active
+															? 'bg-gray-100 text-gray-900'
+															: 'text-gray-700'
+													} flex justify-between w-full px-4 py-2 text-sm leading-5 text-left cursor-pointer`}
+													to='/dashboard'
+												>
+													Painel Administrativo
+												</Link>
+											)}
+										</Menu.Item>
+									)}
 									<Menu.Item>
 										{({ active }) => (
 											<span

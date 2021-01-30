@@ -1,5 +1,6 @@
 export interface Profile {
 	id: number
+	role: string
 	firstName: string
 	lastName: string
 	profilePicture: string | null
@@ -10,8 +11,9 @@ export interface Profile {
 export interface Product {
 	id: number
 	name: string
+	slug: string
 	description: string
-	price: number
-	image?: string
+	unitPrice: number
+	pictures: [string]
 	category: string
 }
