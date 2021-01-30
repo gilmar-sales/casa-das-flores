@@ -13,6 +13,11 @@ export class Customer {
 	@PrimaryGeneratedColumn()
 	id: number
 
+	@Column({
+		default: 'user',
+	})
+	role: string
+
 	@Column()
 	firstName: string
 
