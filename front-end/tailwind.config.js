@@ -6,11 +6,11 @@ module.exports = {
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		screens: {
-			sm: '600px',
-			md: '960px',
-			lg: '1280px',
-			xl: '1920px',
-			'2xl': '2160px',
+			sm: '640px',
+			md: '768px',
+			lg: '1024px',
+			xl: '1280px',
+			'2xl': '2560px',
 		},
 		colors: {
 			transparent: 'transparent',
