@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import { HiLockClosed, HiLockOpen, HiMail } from 'react-icons/hi'
-import { AiOutlineLoading } from 'react-icons/ai'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { object, string } from 'yup'
 
@@ -8,6 +6,12 @@ import Logo from '../../icons/Logo'
 import api from '../../middlewares/api'
 import { login } from '../../middlewares/auth'
 import { Link } from 'react-router-dom'
+import {
+	IoLockClosed,
+	IoLockOpen,
+	IoMail,
+	IoSyncOutline,
+} from 'react-icons/io5'
 
 export default function SignIn() {
 	const initialValues = { email: '', password: '', remember_me: false }
@@ -59,7 +63,7 @@ export default function SignIn() {
 						<div className='rounded-md shadow-sm -space-y-px'>
 							<div className='flex rounded-md shadow-sm'>
 								<span className='inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm'>
-									<HiMail />
+									<IoMail />
 								</span>
 								<Field
 									name='email'
@@ -84,7 +88,7 @@ export default function SignIn() {
 							</div>
 							<div className='flex'>
 								<span className='inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm'>
-									<HiLockClosed />
+									<IoLockClosed />
 								</span>
 								<Field
 									id='password'
@@ -145,9 +149,9 @@ export default function SignIn() {
 							>
 								<span className='absolute left-0 inset-y-0 flex items-center pl-3'>
 									{loading ? (
-										<AiOutlineLoading className='animate-spin' />
+										<IoSyncOutline className='animate-spin' />
 									) : (
-										<HiLockOpen />
+										<IoLockOpen />
 									)}
 								</span>
 								Entrar

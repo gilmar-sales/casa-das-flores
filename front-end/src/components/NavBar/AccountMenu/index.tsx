@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 
-import { HiOutlineUser } from 'react-icons/hi'
+import { IoPersonOutline } from 'react-icons/io5'
+
 import SignContext from '../../../contexts/SignContext'
 
 import { isAuthenticated, logout } from '../../../middlewares/auth'
@@ -32,7 +33,7 @@ export default function AccountMenu() {
 						{profile.firstName?.charAt(0) + profile.lastName?.charAt(0)}
 					</span>
 				)
-		} else return <HiOutlineUser className='h-6 w-6' />
+		} else return <IoPersonOutline className='h-6 w-6' />
 	}
 
 	return (

@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { HiUserAdd } from 'react-icons/hi'
-import { AiOutlineLoading } from 'react-icons/ai'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { object, string } from 'yup'
 
 import api from '../../middlewares/api'
 import { Link } from 'react-router-dom'
+import { IoPersonAdd, IoSyncOutline } from 'react-icons/io5'
 
 export default function SignIn() {
 	const initialValues = {
@@ -44,7 +43,7 @@ export default function SignIn() {
 	return (
 		<div>
 			<div className='flex flex-col items-center'>
-				<HiUserAdd className='h-16 w-16 stroke-current text-green-600' />
+				<IoPersonAdd className='h-16 w-16 stroke-current text-green-600' />
 				<h1 className='text-center text-3xl font-extrabold text-gray-900'>
 					Forneça seus dados
 				</h1>
@@ -267,9 +266,9 @@ export default function SignIn() {
 								>
 									<span className='absolute left-0 inset-y-0 flex items-center pl-3'>
 										{loading ? (
-											<AiOutlineLoading className='animate-spin' />
+											<IoSyncOutline className='animate-spin' />
 										) : (
-											<HiUserAdd />
+											<IoPersonAdd />
 										)}
 									</span>
 									Entrar
