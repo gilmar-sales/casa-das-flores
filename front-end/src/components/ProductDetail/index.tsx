@@ -29,8 +29,10 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
 					<div className='flex justify-between rounded-md border px-5 py-4'>
 						<text className='text-xl self-center'>{props.product?.name}</text>
 						<text className='text-md self-center'>
-							<small>R$</small>
-							{props.product?.unitPrice}
+							{Number(props.product?.unitPrice).toLocaleString('pt-BR', {
+								style: 'currency',
+								currency: 'BRL',
+							})}
 						</text>
 					</div>
 					<div className='flex justify-between rounded-md border px-5 py-4'>
