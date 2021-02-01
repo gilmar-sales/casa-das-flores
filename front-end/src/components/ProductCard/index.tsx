@@ -6,31 +6,40 @@ import {
 	HiOutlineHeart,
 	HiPlus,
 } from 'react-icons/hi'
+import { IoArrowForward, IoBanOutline, IoCameraOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { Product } from '../../@types/interfaces'
 
 interface ProductCardProps {
-	product: Product
+	product?: Product
+	loading?: boolean
 }
-const ProductCard: React.FC<ProductCardProps> = (props) => {
+
+const ProductCard: React.FC<ProductCardProps> = ({
+	product,
+	loading,
+	...props
+}) => {
 	const ProductImage = () => {
-		if (props.product.pictures.length) {
+		if (loading) {
+			return (
+				<div className='h-56 flex justify-center items-center bg-gray-200'></div>
+			)
+		} else if (product?.pictures.length) {
 			return (
 				<div
-					className='h-56 bg-gray-900 bg-cover'
+					className='h-56 bg-cover'
 					style={{
-						backgroundImage: `url(${
-							process.env.PUBLIC_URL + props.product.pictures[0]
-						})`,
+						background: `url(${process.env.PUBLIC_URL + product.pictures[0]})`,
 					}}
 				></div>
 			)
 		} else {
 			return (
-				<div className='h-56 flex justify-center items-center bg-gray-300 bg-cover text-gray-400'>
-					<HiOutlineBan className='absolute' size={160} />
-					<HiOutlineCamera className='text-gray-500' size={110} />
+				<div className='h-56 flex justify-center items-center bg-gray-200 bg-cover text-gray-300'>
+					<IoBanOutline className='absolute' size={160} />
+					<IoCameraOutline className='text-gray-400' size={110} />
 				</div>
 			)
 		}
@@ -39,18 +48,41 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
 	return (
 		<div
 			{...props}
-			className={'w-full border border-gray-300 rounded-md overflow-hidden'}
+			className={'w-full h-full border border-gray-300 rounded-md'}
 		>
 			<ReactTooltip place='bottom' effect='solid' globalEventOff='hover' />
 			<ProductImage />
-			<div className='p-2 text-lg text-gray-800 font-bold'>
-				{props.product.name}
-			</div>
-			<div className='p-2  text-gray-800'>{props.product.description}</div>
+			{loading ? (
+				<div className='w-52 m-3 h-4 bg-gray-300 text-lg text-gray-800 font-bold'></div>
+			) : (
+				<div className='p-2 text-lg text-gray-800 font-bold'>
+					{product?.name}
+				</div>
+			)}
+			{loading ? (
+				<div>
+					<div className='w-64 m-3 h-4 bg-gray-300 text-lg text-gray-800 font-bold'></div>
+					<div className='w-64 m-3 h-4 bg-gray-300 text-lg text-gray-800 font-bold'></div>
+				</div>
+			) : (
+				<div className='p-2  text-gray-800'>{product?.description}</div>
+			)}
 			<div className='grid grid-cols-8  px-2  text-gray-800 mb-3'>
-				<span className='col-span-4 flex items-center text-2xl '>
-					R$ {props.product.unitPrice}
-				</span>
+				{loading ? (
+					<span className='col-span-4 flex items-center text-2xl '>
+						{Number(0).toLocaleString('pt-BR', {
+							style: 'currency',
+							currency: 'BRL',
+						})}
+					</span>
+				) : (
+					<span className='col-span-4 flex items-center text-2xl '>
+						{Number(product?.unitPrice).toLocaleString('pt-BR', {
+							style: 'currency',
+							currency: 'BRL',
+						})}
+					</span>
+				)}
 				<div className='col-span-4 flex justify-between '>
 					<button
 						className='rounded-full border border-gray-300 p-2 hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
@@ -64,12 +96,12 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
 					>
 						<HiPlus className='h-6 w-6' />
 					</button>
-					<Link to={`/product/${props.product.slug}`}>
+					<Link to={`/store/product/${product?.slug}`}>
 						<button
 							className='rounded-full border border-gray-300 p-2 hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
 							data-tip='Visualizar'
 						>
-							<HiArrowRight className='h-6 w-6' />
+							<IoArrowForward className='h-6 w-6' />
 						</button>
 					</Link>
 				</div>
