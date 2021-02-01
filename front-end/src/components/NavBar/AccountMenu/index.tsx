@@ -30,7 +30,9 @@ export default function AccountMenu() {
 			else
 				return (
 					<span className='uppercase'>
-						{profile.firstName?.charAt(0) + profile.lastName?.charAt(0)}
+						{profile.firstName?.charAt(0) + profile.lastName?.charAt(0) || (
+							<IoPersonOutline className='h-6 w-6' />
+						)}
 					</span>
 				)
 		} else return <IoPersonOutline className='h-6 w-6' />

@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
+
 import {
-	HiOutlineChatAlt,
-	HiOutlineHeart,
-	HiOutlineShoppingBag,
-	HiSearch,
-} from 'react-icons/hi'
+	IoChatboxEllipsesOutline,
+	IoHeartOutline,
+	IoBagHandleOutline,
+	IoSearchOutline,
+} from 'react-icons/io5'
 
 import { Link } from 'react-router-dom'
 
@@ -24,7 +25,7 @@ export default function NavBar(props: { children: any }) {
 	return (
 		<div>
 			<ReactTooltip place='bottom' effect='solid' globalEventOff='hover' />
-			<nav className='flex mb-0 sm:mb-4 justify-between py-2 text-green-500 border-dashed sm:border-b-2 border-green-100 '>
+			<nav className='flex justify-between py-2 text-green-500 border-dashed sm:border-b-2 border-green-100 '>
 				{/* Brand Section*/}
 				<div className='flex items-center px-2 sm:px-4 lg:px-6'>
 					<Link
@@ -48,7 +49,7 @@ export default function NavBar(props: { children: any }) {
 							onChange={(e) => setSearchText(e.target.value)}
 						/>
 						<button className='px-4 py-1 rounded-r-md border border-l-0 border-green-500 bg-green-50 hover:bg-green-400 hover:text-white'>
-							<HiSearch className='h-6 w-6' />
+							<IoSearchOutline className='h-6 w-6' />
 						</button>
 					</div>
 				</div>
@@ -58,19 +59,19 @@ export default function NavBar(props: { children: any }) {
 						className='bg-green-500 h-10 w-10 p-2 rounded-full '
 						data-tip='Suporte'
 					>
-						<HiOutlineChatAlt className='h-6 w-6' />
+						<IoChatboxEllipsesOutline className='h-6 w-6' />
 					</button>
 					<button
 						className='bg-green-500 h-10 w-10 p-2 rounded-full '
 						data-tip='Desejos'
 					>
-						<HiOutlineHeart className='h-6 w-6' />
+						<IoHeartOutline className='h-6 w-6' />
 					</button>
 					<button
 						className='bg-green-500 h-10 w-10 p-2 rounded-full'
 						data-tip='Cesta'
 					>
-						<HiOutlineShoppingBag className='h-6 w-6' />
+						<IoBagHandleOutline className='h-6 w-6' />
 					</button>
 					<div className='relative'>
 						<AccountMenu />
@@ -78,7 +79,7 @@ export default function NavBar(props: { children: any }) {
 				</div>
 			</nav>
 			{/* Mobile Section */}
-			<div className='flex mb-4 justify-center sm:hidden  text-green-500 py-2 border-dashed border-b-2 border-green-100'>
+			<div className='flex justify-center sm:hidden  text-green-500 py-2 border-dashed border-b-2 border-green-100'>
 				<form className='flex' action='#' method='POST'>
 					<input
 						type='text'
@@ -90,7 +91,7 @@ export default function NavBar(props: { children: any }) {
 						onChange={(e) => setSearchText(e.target.value)}
 					/>
 					<button className='px-4 py-1 rounded-r-md border border-l-0 border-green-500 bg-green-50 hover:bg-green-400 hover:text-green-50'>
-						<HiSearch className='h-6 w-6' />
+						<IoSearchOutline className='h-6 w-6' />
 					</button>
 				</form>
 			</div>
