@@ -35,9 +35,9 @@ const Carousel: React.FC<CarouselProps> = (props) => {
 					))
 				) : (
 					<Slide index={0}>
-						<div className=' h-full flex justify-center items-center bg-gray-300 bg-cover text-gray-400'>
+						<div className=' h-full flex justify-center items-center bg-gray-200 bg-cover text-gray-300'>
 							<HiOutlineBan className='absolute text-9xl' />
-							<HiOutlineCamera className='text-gray-500 text-8xl' />
+							<HiOutlineCamera className='text-gray-400 text-8xl' />
 						</div>
 					</Slide>
 				)}
