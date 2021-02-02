@@ -14,8 +14,9 @@ export default {
 			unitPrice,
 			width,
 			height,
-			depth,
+			lenght,
 			category,
+			pictures,
 		} = req.body
 
 		const slug = slugify(name)
@@ -23,15 +24,11 @@ export default {
 		const productRepository = getRepository(Product)
 		const pictureRepository = getRepository(Picture)
 
-		const productExists = await productRepository.findOne({ where: { name } })
-
-		if (productExists) {
+		/*if (productExists) {
 			return res.send({
 				errors: { email: 'Nome já está sendo utilizado por outro produto' },
 			})
-		}
-
-		const pictures: Picture[] = []
+		}*/
 
 		const product = productRepository.create({
 			name: name,
@@ -40,8 +37,7 @@ export default {
 			unitPrice: unitPrice,
 			width: width,
 			height: height,
-			depth: depth,
-			createdDate: new Date(Date.now()),
+			lenght: lenght,
 			category: category,
 		})
 
@@ -49,11 +45,11 @@ export default {
 			return res.send(error)
 		})
 
-		/*picturesPaths.map((path) => {
+		pictures.map(async (path) => {
 			const picture = pictureRepository.create({ path: path, product: product })
-			pictureRepository.save(picture)
+			await pictureRepository.save(picture)
 			pictures.push(picture)
-		})*/
+		})
 
 		return res.send(product)
 	},
@@ -83,9 +79,11 @@ export default {
 
 		const repository = getRepository(Product)
 
-		const product = await repository.findOne({ slug: slug }).catch((error) => {
-			res.send(error)
-		})
+		const product = await repository
+			.findOne({ where: { slug: slug }, relations: ['pictures', 'category'] })
+			.catch((error) => {
+				res.send(error)
+			})
 
 		if (!product) return res.sendStatus(404)
 
