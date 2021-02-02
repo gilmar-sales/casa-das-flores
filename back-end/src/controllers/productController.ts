@@ -8,6 +8,8 @@ import { Picture } from '../entity/Picture'
 
 export default {
 	async create(req: Request, res: Response) {
+		if (req.userRole !== 'admin') return res.sendStatus(401)
+
 		const {
 			name,
 			description,
