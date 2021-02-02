@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Product } from '../../@types/interfaces'
 
-import Carousel from '../../components/Carousel'
 import Pagination from '../../components/Pagination'
 import ProductCard from '../../components/ProductCard'
 import api from '../../middlewares/api'
@@ -34,19 +33,7 @@ export default function Home() {
 
 	return (
 		<div className='flex flex-row'>
-			{/* Slides 
-			<div className='flex justify-center items-center w-full mb-4'>
-				<div className='w-full md:w-10/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12'>
-					<Carousel
-						naturalSlideWidth={8}
-						naturalSlideHeight={4}
-						totalSlides={3}
-						slides={slides}
-					/>
-				</div>
-			</div>
-			*/}
-			{/* Categories
+			{/* Categories */}
 			<div className='hidden md:flex flex-col border-dashed border-r-2 border-green-100 py-2 items-center justify-around'>
 				{categories.map((category, index) => (
 					<button
@@ -57,7 +44,6 @@ export default function Home() {
 					</button>
 				))}
 			</div>
-			*/}
 			{/* Products */}
 			<div className='flex flex-col w-full'>
 				<Pagination numPages={numPages} setPage={handlePage} page={page} />
@@ -66,7 +52,7 @@ export default function Home() {
 						? [...Array(4)].map((value, index) => (
 								<div
 									key={index}
-									className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2 animate-pulse'
+									className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'
 								>
 									<ProductCard loading={true} />
 								</div>
