@@ -49,6 +49,6 @@ export class Product {
 	@Column('decimal', { nullable: true, precision: 10, scale: 2 })
 	lenght: number
 
-	@Column()
+	@Column({ nullable: true })
 	createdDate: Date
 }
