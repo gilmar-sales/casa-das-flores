@@ -45,7 +45,7 @@ export class Customer {
 	})
 	profilePicture: string
 
-	@Column()
+	@Column({ nullable: true })
 	createdDate: Date
 
 	@Column({
