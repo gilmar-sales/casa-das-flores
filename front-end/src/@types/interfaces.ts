@@ -8,12 +8,20 @@ export interface Profile {
 	phone: string
 }
 
+export interface Picture {
+	id: number
+	path: string
+}
+
 export interface Product {
 	id: number
 	name: string
 	slug: string
 	description: string
 	unitPrice: number
-	pictures: [string]
+	width: number
+	height: number
+	lenght: number
+	pictures: Picture[]
 	category: string
 }

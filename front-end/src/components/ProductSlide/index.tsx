@@ -17,9 +17,10 @@ import {
 } from 'pure-react-carousel'
 
 import 'pure-react-carousel/dist/react-carousel.es.css'
+import { Picture } from '../../@types/interfaces'
 
 interface CarouselProps extends Omit<CarouselProviderProps, 'children'> {
-	slides?: string[]
+	slides?: Picture[]
 	className?: string
 }
 
@@ -30,7 +31,7 @@ const Carousel: React.FC<CarouselProps> = (props) => {
 				{props.slides?.length ? (
 					props.slides?.map((slide, index) => (
 						<Slide key={index} index={index}>
-							<ImageWithZoom src={slide} />
+							<ImageWithZoom src={slide.path} />
 						</Slide>
 					))
 				) : (

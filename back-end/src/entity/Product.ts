@@ -47,7 +47,7 @@ export class Product {
 	height: number
 
 	@Column('decimal', { nullable: true, precision: 10, scale: 2 })
-	depth: number
+	lenght: number
 
 	@Column()
 	createdDate: Date

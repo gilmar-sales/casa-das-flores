@@ -58,4 +58,9 @@ export class Customer {
 	hashPassword() {
 		this.password = bcrypt.hashSync(this.password, 12)
 	}
+
+	@BeforeInsert()
+	insertDate() {
+		this.createdDate = new Date(Date.now())
+	}
 }

@@ -23,7 +23,6 @@ export default {
 			email: email,
 			cpf: cpf,
 			password: password,
-			createdDate: new Date(Date.now()),
 		})
 
 		await repository.save(customer)

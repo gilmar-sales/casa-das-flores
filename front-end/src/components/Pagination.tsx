@@ -28,6 +28,7 @@ const Pagination: React.FC<PaginationProps> = ({
 				</button>
 				{[...Array(numPages)].map((value, index) => (
 					<button
+						key={index}
 						className={`h-8 w-8 rounded-full border border-green-500 ${
 							page === index + 1 && 'bg-green-500 text-white'
 						}`}
@@ -71,6 +72,7 @@ const Pagination: React.FC<PaginationProps> = ({
 					if (page <= 3) {
 						return (
 							<button
+								key={index}
 								className={`h-8 w-8 rounded-full border border-green-500 ${
 									page === index + 2 && 'bg-green-500 text-white'
 								}`}

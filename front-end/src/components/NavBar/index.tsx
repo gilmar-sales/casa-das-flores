@@ -24,13 +24,13 @@ export default function NavBar(props: { children: any }) {
 
 	return (
 		<div>
-			<ReactTooltip place='bottom' effect='solid' globalEventOff='hover' />
+			<ReactTooltip place='bottom' effect='solid' globalEventOff='click' />
 			<nav className='flex justify-between py-2 text-green-500 border-dashed sm:border-b-2 border-green-100 '>
 				{/* Brand Section*/}
 				<div className='flex items-center px-2 sm:px-4 lg:px-6'>
 					<Link
 						className='flex flex-row justify-between items-center cursor-pointer'
-						to='/'
+						to='/store'
 					>
 						<Logo className='h-10 w-10 text-green-500' />
 						<span className='hidden md:block ml-2'>Casa das Flores</span>
