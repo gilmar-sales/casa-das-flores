@@ -82,17 +82,11 @@ export default function Routes() {
 									component={ProductOverview}
 								/>
 								<Route path={match.path} exact component={Home} />
-								<Route component={NotFound} />
-							</Switch>
-						</NavBar>
-					)}
-				/>
-				<Route
-					path='/profile'
-					component={({ match }: { match: any }) => (
-						<NavBar>
-							<Switch>
-								<ProtectedRoute path={match.path} component={Profile} />
+
+								<ProtectedRoute
+									path={`${match.path}/profile`}
+									component={Profile}
+								/>
 								<Route component={NotFound} />
 							</Switch>
 						</NavBar>
