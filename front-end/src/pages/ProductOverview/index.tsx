@@ -22,7 +22,7 @@ export default function ProductOverview() {
 			.catch((error) => {
 				if (error.response.status === 404) history.push('/')
 			})
-	})
+	}, [])
 
 	return (
 		<>
