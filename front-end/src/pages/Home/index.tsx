@@ -49,7 +49,7 @@ export default function Home() {
 				<Pagination numPages={numPages} setPage={handlePage} page={page} />
 				<div className='grid grid-cols-12 gap-4 p-4'>
 					{isLoading
-						? [...Array(4)].map((value, index) => (
+						? [...Array(8)].map((value, index) => (
 								<div
 									key={index}
 									className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'
@@ -66,7 +66,7 @@ export default function Home() {
 								</div>
 						  ))}
 				</div>
-				<Pagination numPages={numPages} setPage={setPage} page={page} />
+				<Pagination numPages={numPages} setPage={handlePage} page={page} />
 			</div>
 		</div>
 	)
