@@ -30,16 +30,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
 		window.scrollTo({ top: 0, behavior: 'auto' })
 	}
 
-	const pushItem = () => {
+	const pushItem = async () => {
 		setLoadingBag(true)
-		shopBagCtx.pushItem(product)
-		setLoadingBag(false)
+		shopBagCtx.pushItem(product).then(() => setLoadingBag(false))
 	}
 
 	const popItem = async () => {
 		setLoadingBag(true)
-		shopBagCtx.popItem(product)
-		setLoadingBag(false)
+		shopBagCtx.popItem(product).then(() => setLoadingBag(false))
 	}
 
 	const ProductImage = () => {
