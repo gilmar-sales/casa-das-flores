@@ -10,8 +10,8 @@ interface ContextProps {
 	items: BagItem[]
 	setItems: React.Dispatch<React.SetStateAction<BagItem[]>>
 	contains: (product?: Product) => boolean
-	pushItem: (product?: Product) => void
-	popItem: (product?: Product) => void
+	pushItem: (product?: Product) => Promise<void>
+	popItem: (product?: Product) => Promise<void>
 }
 
 const ShopBagContext = createContext<ContextProps>({} as ContextProps)
