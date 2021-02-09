@@ -28,12 +28,29 @@ export default {
 		const bagItemRepository = getRepository(BagItem)
 
 		const customer = await customerRepository.findOne({ id: req.userId })
-		const bagItems = await bagItemRepository.findAndCount({
+		const bagItems = await bagItemRepository.find({
 			where: { customer },
 			relations: ['product'],
 		})
 
-		res.send({ count: bagItems[1], bagItems: bagItems[0] })
+		res.send(bagItems.map((item) => ({ ...item.product, count: item.count })))
 	},
-	async delete(req: Request, res: Response) {},
+	async delete(req: Request, res: Response) {
+		const repository = getRepository(BagItem)
+
+		const bagItem = await repository
+			.createQueryBuilder()
+			.delete()
+			.where('product_id = :id and customer_id = :customer_id', {
+				id: req.params.id,
+				customer_id: req.userId,
+			})
+			.execute()
+			.then(() => {
+				return res.sendStatus(200)
+			})
+			.catch((error) => {
+				res.sendStatus(500)
+			})
+	},
 }
