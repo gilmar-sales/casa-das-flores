@@ -24,12 +24,10 @@ export default {
 			.catch((error) => res.send(error))
 	},
 	async read(req: Request, res: Response) {
-		const customerRepository = getRepository(Customer)
 		const bagItemRepository = getRepository(BagItem)
 
-		const customer = await customerRepository.findOne({ id: req.userId })
 		const bagItems = await bagItemRepository.find({
-			where: { customer },
+			where: `customer_id = ${req.userId}`,
 			relations: ['product'],
 		})
 

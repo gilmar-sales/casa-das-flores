@@ -34,11 +34,11 @@ export default function Home() {
 	return (
 		<div className='flex flex-col'>
 			{/* Categories */}
-			<div className='hidden md:flex flex-col border-dashed border-r-2 border-green-100 py-2 items-center justify-around'>
+			<div className='hidden h-10 md:flex flex-col border-dashed  border-green-100 items-center justify-around'>
 				{categories.map((category, index) => (
 					<button
 						key={index}
-						className='text-green-500 hover:bg-green-100 py-2 px-4'
+						className='text-green-500 border-dashed border-b-2 border-green-100  hover:bg-green-100 py-2 px-4'
 					>
 						{category}
 					</button>

@@ -118,13 +118,8 @@ export default function NavBar(props: { children: any }) {
 			>
 				<SignUp />
 			</Modal>
-			<div className='flex flex-col items-center '>
-				<div
-					className='flex flex-grow justify-center'
-					style={{ maxWidth: 1330 }}
-				>
-					{props.children}
-				</div>
+			<div className='mx-auto' style={{ maxWidth: 1330 }}>
+				{props.children}
 			</div>
 		</div>
 	)
