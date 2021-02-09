@@ -3,12 +3,15 @@ import Routes from './routes'
 
 import { SignProvider } from './contexts/SignContext'
 import Footer from './components/Footer'
+import { ShopBagProvider } from './contexts/ShopBagContext'
 
 function App() {
 	return (
 		<div className='App '>
 			<SignProvider>
-				<Routes />
+				<ShopBagProvider>
+					<Routes />
+				</ShopBagProvider>
 			</SignProvider>
 			<Footer />
 		</div>

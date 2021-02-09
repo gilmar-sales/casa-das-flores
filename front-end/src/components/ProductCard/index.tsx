@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
 	IoArrowForward,
 	IoBagAddOutline,
+	IoBagRemoveOutline,
 	IoBanOutline,
 	IoCameraOutline,
 	IoHeartOutline,
@@ -10,7 +11,7 @@ import {
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { Product } from '../../@types/interfaces'
-import api from '../../middlewares/api'
+import ShopBagContext from '../../contexts/ShopBagContext'
 
 interface ProductCardProps {
 	product?: Product
@@ -22,20 +23,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
 	loading,
 	...props
 }) => {
-	const [isAddingToBag, setAddingToBag] = useState(false)
+	const [loadingBag, setLoadingBag] = useState(false)
+	const shopBagCtx = useContext(ShopBagContext)
 
 	const scrollTop = () => {
 		window.scrollTo({ top: 0, behavior: 'auto' })
 	}
 
-	const addToBag = () => {
-		setAddingToBag(true)
-		api
-			.post('/customer/shopbag', { product_id: product?.id })
-			.then((response) => {
-				setAddingToBag(false)
-			})
-			.catch((error) => console.log(error))
+	const pushItem = () => {
+		setLoadingBag(true)
+		shopBagCtx.pushItem(product)
+		setLoadingBag(false)
+	}
+
+	const popItem = async () => {
+		setLoadingBag(true)
+		shopBagCtx.popItem(product)
+		setLoadingBag(false)
 	}
 
 	const ProductImage = () => {
@@ -120,17 +124,32 @@ const ProductCard: React.FC<ProductCardProps> = ({
 					>
 						<IoHeartOutline className='h-6 w-6' />
 					</button>
-					<button
-						className='rounded-full border border-gray-300 p-2 hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
-						data-tip='Adicionar à cesta'
-						onClick={isAddingToBag ? () => {} : addToBag}
-					>
-						{isAddingToBag ? (
-							<IoSyncOutline className='h-6 w-6 animate-spin' />
-						) : (
-							<IoBagAddOutline className='h-6 w-6' />
-						)}
-					</button>
+					{shopBagCtx.contains(product) ? (
+						<button
+							className='rounded-full border border-gray-300 p-2 hover:border-red-500 hover:text-red-500 focus:border-red-500 focus:text-red-500'
+							data-tip='Remover da cesta'
+							onClick={loadingBag ? () => {} : popItem}
+						>
+							{loadingBag ? (
+								<IoSyncOutline className='h-6 w-6 animate-spin' />
+							) : (
+								<IoBagRemoveOutline className='h-6 w-6' />
+							)}
+						</button>
+					) : (
+						<button
+							className='rounded-full border border-gray-300 p-2 hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
+							data-tip='Adicionar à cesta'
+							onClick={loadingBag ? () => {} : pushItem}
+						>
+							{loadingBag ? (
+								<IoSyncOutline className='h-6 w-6 animate-spin' />
+							) : (
+								<IoBagAddOutline className='h-6 w-6' />
+							)}
+						</button>
+					)}
+
 					<Link to={`/store/product/${product?.slug}`} onClick={scrollTop}>
 						<button
 							className='rounded-full border border-gray-300 p-2 hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
