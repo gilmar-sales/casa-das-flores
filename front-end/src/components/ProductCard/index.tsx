@@ -42,9 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
 	const ProductImage = () => {
 		if (loading) {
-			return (
-				<div className='h-56 flex justify-center items-center bg-gray-200'></div>
-			)
+			return <div className='h-56  bg-gray-200'></div>
 		} else if (product?.pictures.length) {
 			return (
 				<div
@@ -69,9 +67,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
 	return (
 		<div
 			{...props}
-			className={`w-full h-full flex flex-col justify-between border border-gray-300 rounded-md ${
-				loading && 'animate-pulse'
-			}`}
+			className={`
+				h-full 
+				flex
+				flex-grow
+				flex-col 
+				border 
+				border-gray-300 
+				rounded-md 
+				${loading && 'animate-pulse'}
+			 `}
 		>
 			<ReactTooltip place='bottom' effect='solid' />
 			<ProductImage />
