@@ -25,6 +25,7 @@ routes.get('/customers/profile', authMiddleware, ProfileController.read)
 
 routes.post('/customer/shopbag', authMiddleware, ShopBagController.create)
 routes.get('/customer/shopbag', authMiddleware, ShopBagController.read)
+routes.put('/customer/shopbag', authMiddleware, ShopBagController.update)
 routes.delete('/customer/shopbag/:id', authMiddleware, ShopBagController.delete)
 
 routes.post('/products', authMiddleware, ProductController.create)
