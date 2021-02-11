@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { Product } from '../@types/interfaces'
 import api from '../middlewares/api'
+import { isAuthenticated } from '../middlewares/auth'
+import usePersistedState from '../utils/usePersistedState'
 
 interface BagItem extends Product {
 	count: number
@@ -17,12 +19,16 @@ interface ContextProps {
 const ShopBagContext = createContext<ContextProps>({} as ContextProps)
 
 export const ShopBagProvider: React.FC = ({ children }) => {
-	const [items, setItems] = useState<BagItem[]>([])
+	const [items, setItems] = usePersistedState<BagItem[]>(
+		isAuthenticated() ? 'userBag' : 'guessBag',
+		[]
+	)
 
 	useEffect(() => {
-		api.get('/customer/shopbag').then((response) => {
-			setItems(response.data)
-		})
+		if (isAuthenticated())
+			api.get('/customer/shopbag').then((response) => {
+				setItems(response.data)
+			})
 	}, [setItems])
 
 	const contains: (product?: Product) => boolean = (product) => {
@@ -40,28 +46,38 @@ export const ShopBagProvider: React.FC = ({ children }) => {
 	}
 
 	const pushItem = async (product?: Product) => {
-		await api
-			.post('/customer/shopbag', { product_id: product?.id })
-			.then((response) => {
-				if (product) {
-					setItems([...items, { ...product, count: 1 }])
-				}
-			})
-			.catch((error) => console.log(error))
+		if (isAuthenticated()) {
+			await api
+				.post('/customer/shopbag', { product_id: product?.id })
+				.then((response) => {
+					if (product) {
+						setItems([...items, { ...product, count: 1 }])
+					}
+				})
+				.catch((error) => console.log(error))
+		} else if (product) setItems([...items, { ...product, count: 1 }])
 	}
 
 	const popItem = async (product?: Product) => {
-		await api.delete(`/customer/shopbag/${product?.id}`).then((response) => {
-			if (response.status === 200) {
-				if (product) {
-					items.splice(
-						items.findIndex((element) => element.id === product.id),
-						1
-					)
-					setItems([...items])
+		if (isAuthenticated()) {
+			await api.delete(`/customer/shopbag/${product?.id}`).then((response) => {
+				if (response.status === 200) {
+					if (product) {
+						items.splice(
+							items.findIndex((element) => element.id === product.id),
+							1
+						)
+						setItems([...items])
+					}
 				}
-			}
-		})
+			})
+		} else if (product) {
+			items.splice(
+				items.findIndex((element) => element.id === product.id),
+				1
+			)
+			setItems([...items])
+		}
 	}
 
 	return (
