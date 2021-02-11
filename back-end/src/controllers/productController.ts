@@ -21,7 +21,7 @@ export default {
 			pictures,
 		} = req.body
 
-		const slug = slugify(name)
+		const slug = slugify(name, true)
 
 		const productRepository = getRepository(Product)
 		const pictureRepository = getRepository(Picture)
