@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect } from 'react'
 import { Product } from '../@types/interfaces'
 import api from '../middlewares/api'
 import { isAuthenticated } from '../middlewares/auth'
