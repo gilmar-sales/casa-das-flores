@@ -30,9 +30,20 @@ export default function Home() {
 		page !== value && setLoading(true)
 		setPage(value)
 	}
+	let clientX = 0
 
 	return (
-		<div className='flex flex-col'>
+		<div
+			className='flex flex-col'
+			onTouchStart={(event) => {
+				clientX = event.touches[0].clientX
+			}}
+			onTouchEndCapture={(event) => {
+				if (page > 1 && clientX - event.touches[0].clientX < 0)
+					handlePage(page - 1)
+				else if (page < numPages) handlePage(page + 1)
+			}}
+		>
 			{/* Categories */}
 			<div className='hidden h-10 md:flex flex-row border-dashed  border-green-100 items-center justify-around'>
 				{categories.map((category, index) => (
@@ -52,7 +63,7 @@ export default function Home() {
 						? [...Array(8)].map((value, index) => (
 								<div
 									key={index}
-									className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'
+									className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3'
 								>
 									<ProductCard loading={true} />
 								</div>
@@ -60,7 +71,7 @@ export default function Home() {
 						: products.map((product, index) => (
 								<div
 									key={index}
-									className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'
+									className='col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-4 xl:col-span-3'
 								>
 									<ProductCard product={product} />
 								</div>
