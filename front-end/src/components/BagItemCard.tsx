@@ -44,10 +44,10 @@ const BagItemCard: React.FC<BagItemProps> = ({ item, loading, ...props }) => {
 	const ProductImage = () => {
 		if (loading) {
 			return <div className='w-full h-full mr-4 bg-gray-200'></div>
-		} else if (item?.pictures?.length) {
+		} else if (item?.pictures.length) {
 			return (
 				<div
-					className='w-56 bg-cover'
+					className='w-full h-full bg-cover'
 					style={{
 						backgroundImage: `url(${
 							process.env.PUBLIC_URL + item.pictures[0].path
@@ -74,6 +74,7 @@ const BagItemCard: React.FC<BagItemProps> = ({ item, loading, ...props }) => {
                 gap-2
                 border
 				rounded-md 
+				overflow-hidden
 				${loading && 'animate-pulse'}
 			 `}
 		>

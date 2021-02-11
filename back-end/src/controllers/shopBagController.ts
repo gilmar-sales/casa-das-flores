@@ -28,7 +28,7 @@ export default {
 
 		const bagItems = await bagItemRepository.find({
 			where: `customer_id = ${req.userId}`,
-			relations: ['product'],
+			relations: ['product', 'product.pictures'],
 		})
 
 		res.send(bagItems.map((item) => ({ ...item.product, count: item.count })))
