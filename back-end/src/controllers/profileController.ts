@@ -11,6 +11,21 @@ export default {
 
 		return res.send(user)
 	},
+	//check if auth token is expired
+	async validate(req: Request, res: Response) {
+		const { authorization } = req.headers
+
+		if (!authorization) return res.send(false)
+
+		const token = authorization.replace('Bearer', '').trim()
+
+		try {
+			jwt.verify(token, process.env.JWT_PUBLIC_KEY)
+			return res.send(true)
+		} catch {
+			return res.send(false)
+		}
+	},
 	async authenticate(req: Request, res: Response) {
 		const { email, password } = req.body
 

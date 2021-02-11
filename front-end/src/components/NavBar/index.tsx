@@ -73,17 +73,19 @@ export default function NavBar(props: { children: any }) {
 						>
 							<IoHeartOutline className='h-6 w-6' />
 						</button>
-						<button
-							className='bg-green-500 h-10 w-10 p-2 rounded-full relative'
-							data-tip='Cesta'
-						>
-							<IoBagHandleOutline className='h-6 w-6' />
-							{shopBagCtx.items.length !== 0 && (
-								<div className='absolute top-0 left-0 bg-red-500 text-xs w-4 h-4 rounded-full'>
-									{shopBagCtx.items.length}
-								</div>
-							)}
-						</button>
+						<Link to={'/store/shopbag'}>
+							<button
+								className='bg-green-500 h-10 w-10 p-2 rounded-full relative'
+								data-tip='Cesta'
+							>
+								<IoBagHandleOutline className='h-6 w-6' />
+								{shopBagCtx.items.length !== 0 && (
+									<div className='absolute top-0 left-0 bg-red-500 text-xs w-4 h-4 rounded-full'>
+										{shopBagCtx.items.length}
+									</div>
+								)}
+							</button>
+						</Link>
 						<div className='relative'>
 							<AccountMenu />
 						</div>

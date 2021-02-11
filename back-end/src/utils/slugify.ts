@@ -1,6 +1,6 @@
 import { v4 } from 'uuid'
 
-export default function slugify(name: string) {
+export default function slugify(name: string, genUuid?: boolean) {
 	const map = {
 		'-': ' |_',
 		a: 'á|à|ã|â|À|Á|Ã|Â',
@@ -16,7 +16,10 @@ export default function slugify(name: string) {
 		name = name.replace(new RegExp(map[pattern], 'g'), pattern)
 	}
 
-	const uuid = v4().split('-')[0]
+	if (genUuid) {
+		const uuid = v4().split('-')[0]
+		return name.toLowerCase().concat(`-${uuid}`)
+	}
 
-	return name.toLowerCase().concat(`-${uuid}`)
+	return name.toLowerCase()
 }

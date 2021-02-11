@@ -33,6 +33,26 @@ export default {
 
 		res.send(bagItems.map((item) => ({ ...item.product, count: item.count })))
 	},
+	async update(req: Request, res: Response) {
+		const repository = getRepository(BagItem)
+		const { product_id, count } = req.body
+
+		await repository
+			.createQueryBuilder()
+			.update()
+			.where('product_id = :id and customer_id = :customer_id', {
+				id: product_id,
+				customer_id: req.userId,
+			})
+			.set({ count })
+			.execute()
+			.then((result) => {
+				res.sendStatus(200)
+			})
+			.catch((error) => {
+				res.status(400).send(error.detail)
+			})
+	},
 	async delete(req: Request, res: Response) {
 		const repository = getRepository(BagItem)
 
