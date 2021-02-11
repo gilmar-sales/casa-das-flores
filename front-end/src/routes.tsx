@@ -22,6 +22,7 @@ import Sales from './pages/admin/Sales'
 import Orders from './pages/admin/Orders'
 import Announcements from './pages/admin/Announcements'
 import Products from './pages/admin/Products'
+import ShopBag from './pages/ShopBag'
 
 const ProtectedRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
 	const routeComponent = (props: any) =>
@@ -82,6 +83,11 @@ export default function Routes() {
 									component={ProductOverview}
 								/>
 								<Route path={match.path} exact component={Home} />
+								<Route
+									path={`${match.path}/shopbag`}
+									exact
+									component={ShopBag}
+								/>
 
 								<ProtectedRoute
 									path={`${match.path}/profile`}

@@ -4,7 +4,7 @@ import api from '../middlewares/api'
 import { isAuthenticated } from '../middlewares/auth'
 import usePersistedState from '../utils/usePersistedState'
 
-interface BagItem extends Product {
+export interface BagItem extends Product {
 	count: number
 }
 
@@ -14,6 +14,8 @@ interface ContextProps {
 	contains: (product?: Product) => boolean
 	pushItem: (product?: Product) => Promise<void>
 	popItem: (product?: Product) => Promise<void>
+	increaseCount: (product?: Product) => Promise<void>
+	decreaseCount: (product?: Product) => Promise<void>
 }
 
 const ShopBagContext = createContext<ContextProps>({} as ContextProps)
@@ -33,50 +35,100 @@ export const ShopBagProvider: React.FC = ({ children }) => {
 
 	const contains: (product?: Product) => boolean = (product) => {
 		if (product) {
-			return (
-				items.find((element) => {
-					console.log(element)
-
-					return element.id === product.id
-				}) !== undefined
-			)
+			return items.find((element) => element.id === product.id) !== undefined
 		}
 
 		return false
 	}
 
 	const pushItem = async (product?: Product) => {
+		const _pushItem = () => {
+			if (product) {
+				setItems([...items, { ...product, count: 1 }])
+			}
+		}
+
 		if (isAuthenticated()) {
 			await api
 				.post('/customer/shopbag', { product_id: product?.id })
 				.then((response) => {
-					if (product) {
-						setItems([...items, { ...product, count: 1 }])
-					}
+					_pushItem()
 				})
 				.catch((error) => console.log(error))
-		} else if (product) setItems([...items, { ...product, count: 1 }])
+		} else _pushItem()
 	}
 
 	const popItem = async (product?: Product) => {
+		const _popItem = () => {
+			if (product) {
+				items.splice(
+					items.findIndex((element) => element.id === product.id),
+					1
+				)
+				setItems([...items])
+			}
+		}
+
 		if (isAuthenticated()) {
 			await api.delete(`/customer/shopbag/${product?.id}`).then((response) => {
 				if (response.status === 200) {
-					if (product) {
-						items.splice(
-							items.findIndex((element) => element.id === product.id),
-							1
-						)
-						setItems([...items])
-					}
+					_popItem()
 				}
 			})
-		} else if (product) {
-			items.splice(
-				items.findIndex((element) => element.id === product.id),
-				1
-			)
-			setItems([...items])
+		} else _popItem()
+	}
+
+	const increaseCount = async (product?: Product) => {
+		const _increaseCount = (item?: BagItem) => {
+			if (item) {
+				item.count += 1
+				setItems([...items])
+			}
+		}
+		if (product) {
+			const item = items.find((element) => element.id === product.id)
+
+			if (isAuthenticated()) {
+				if (item) {
+					api
+						.put('/customer/shopbag', {
+							product_id: product?.id,
+							count: item.count + 1,
+						})
+						.then(() => _increaseCount(item))
+				}
+			} else if (product) {
+				const item = items.find((element) => element.id === product.id)
+
+				if (item) {
+					item.count += 1
+					setItems([...items])
+				}
+			}
+		}
+	}
+
+	const decreaseCount = async (product?: Product) => {
+		const _decreaseCount = (item?: BagItem) => {
+			if (item) {
+				item.count -= 1
+				setItems([...items])
+			}
+		}
+
+		if (product) {
+			const item = items.find((element) => element.id === product.id)
+
+			if (isAuthenticated()) {
+				if (item) {
+					api
+						.put('/customer/shopbag', {
+							product_id: product?.id,
+							count: item.count - 1,
+						})
+						.then(() => _decreaseCount(item))
+				}
+			} else _decreaseCount(item)
 		}
 	}
 
@@ -88,6 +140,8 @@ export const ShopBagProvider: React.FC = ({ children }) => {
 				contains,
 				pushItem,
 				popItem,
+				increaseCount,
+				decreaseCount,
 			}}
 		>
 			{children}
