@@ -70,8 +70,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 			className={`
 				h-full 
 				flex
-				flex-grow
 				flex-col 
+				justify-between
 				border 
 				border-gray-300 
 				rounded-md 
