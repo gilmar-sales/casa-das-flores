@@ -43,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 	const ProductImage = () => {
 		if (loading) {
 			return <div className='h-56  bg-gray-200'></div>
-		} else if (product?.pictures.length) {
+		} else if (product?.pictures?.length) {
 			return (
 				<div
 					className='h-56 bg-cover'
@@ -73,7 +73,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 				flex-col 
 				justify-between
 				border 
-				border-gray-300 
 				rounded-md 
 				${loading && 'animate-pulse'}
 			 `}
