@@ -1,4 +1,7 @@
 import React, { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
+import ReactTooltip from 'react-tooltip'
+
 import {
 	IoArrowForward,
 	IoBagAddOutline,
@@ -6,12 +9,11 @@ import {
 	IoBanOutline,
 	IoCameraOutline,
 	IoHeartOutline,
-	IoSyncOutline,
 } from 'react-icons/io5'
-import { Link } from 'react-router-dom'
-import ReactTooltip from 'react-tooltip'
+
 import { Product } from '../../../@types/interfaces'
 import ShopBagContext from '../../../contexts/ShopBagContext'
+import CircleButton from '../../atoms/CircleButton'
 
 interface ProductCardProps {
 	product?: Product
@@ -129,38 +131,32 @@ const ProductCard: React.FC<ProductCardProps> = ({
 						<IoHeartOutline className='h-6 w-6' />
 					</button>
 					{shopBagCtx.contains(product) ? (
-						<button
-							className='rounded-full border border-gray-300 p-2 hover:border-red-500 hover:text-red-500 focus:border-red-500 focus:text-red-500'
+						<CircleButton
+							className='hover:border-red-500 hover:text-red-500 focus:border-red-500 focus:text-red-500'
+							loading={loadingBag}
+							outlined
+							icon={<IoBagRemoveOutline className='h-6 w-6' />}
 							data-tip='Remover da cesta'
 							onClick={loadingBag ? () => {} : popItem}
-						>
-							{loadingBag ? (
-								<IoSyncOutline className='h-6 w-6 animate-spin' />
-							) : (
-								<IoBagRemoveOutline className='h-6 w-6' />
-							)}
-						</button>
+						/>
 					) : (
-						<button
-							className='rounded-full border border-gray-300 p-2 hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
+						<CircleButton
+							className='hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
+							loading={loadingBag}
+							outlined
+							icon={<IoBagAddOutline className='h-6 w-6' />}
 							data-tip='Adicionar à cesta'
 							onClick={loadingBag ? () => {} : pushItem}
-						>
-							{loadingBag ? (
-								<IoSyncOutline className='h-6 w-6 animate-spin' />
-							) : (
-								<IoBagAddOutline className='h-6 w-6' />
-							)}
-						</button>
+						/>
 					)}
 
 					<Link to={`/store/product/${product?.slug}`} onClick={scrollTop}>
-						<button
-							className='rounded-full border border-gray-300 p-2 hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
+						<CircleButton
+							className='hover:border-green-500 hover:text-green-500 focus:border-green-500 focus:text-green-500'
+							outlined
+							icon={<IoArrowForward className='h-6 w-6' />}
 							data-tip='Visualizar'
-						>
-							<IoArrowForward className='h-6 w-6' />
-						</button>
+						/>
 					</Link>
 				</div>
 			</div>
