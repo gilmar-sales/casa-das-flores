@@ -4,7 +4,9 @@ import { object, string } from 'yup'
 
 import api from '../../../middlewares/api'
 import { Link } from 'react-router-dom'
-import { IoPersonAdd, IoSyncOutline } from 'react-icons/io5'
+import { IoPersonAdd } from 'react-icons/io5'
+
+import Button from '../../atoms/Button'
 
 export default function SignIn() {
 	const initialValues = {
@@ -260,19 +262,14 @@ export default function SignIn() {
 								</div>
 							</div>
 							<div className='col-span-6 mt-6'>
-								<button
+								<Button
 									type='submit'
-									className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-								>
-									<span className='absolute left-0 inset-y-0 flex items-center pl-3'>
-										{loading ? (
-											<IoSyncOutline className='animate-spin' />
-										) : (
-											<IoPersonAdd />
-										)}
-									</span>
-									Entrar
-								</button>
+									roudend
+									loading={loading}
+									text={'Inscrever-se'}
+									icon={<IoPersonAdd />}
+									className='w-full'
+								/>
 							</div>
 						</div>
 					</Form>

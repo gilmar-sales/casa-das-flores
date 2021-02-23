@@ -6,12 +6,8 @@ import Logo from '../../../icons/Logo'
 import api from '../../../middlewares/api'
 import { login } from '../../../middlewares/auth'
 import { Link } from 'react-router-dom'
-import {
-	IoLockClosed,
-	IoLockOpen,
-	IoMail,
-	IoSyncOutline,
-} from 'react-icons/io5'
+import { IoLockClosed, IoLockOpen, IoMail } from 'react-icons/io5'
+import Button from '../../atoms/Button'
 
 export default function SignIn() {
 	const initialValues = { email: '', password: '', remember_me: false }
@@ -143,19 +139,14 @@ export default function SignIn() {
 						</div>
 
 						<div>
-							<button
+							<Button
 								type='submit'
-								className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-							>
-								<span className='absolute left-0 inset-y-0 flex items-center pl-3'>
-									{loading ? (
-										<IoSyncOutline className='animate-spin' />
-									) : (
-										<IoLockOpen />
-									)}
-								</span>
-								Entrar
-							</button>
+								roudend
+								loading={loading}
+								text={'Entrar'}
+								icon={<IoLockOpen />}
+								className='w-full'
+							/>
 						</div>
 					</Form>
 				)}
