@@ -45,21 +45,17 @@ const Carousel: React.FC<CarouselProps> = (props) => {
 				<DotGroup />
 			</Slider>
 
-			<ButtonBack>
-				<button
-					id='button-prev'
-					className='bg-white text-black-500 shadow-md rounded-full p-2 absolute top-1/2 left-2 z-10 text-2xl hover:opacity-40'
-				>
-					<HiArrowLeft />
-				</button>
+			<ButtonBack
+				id='button-prev'
+				className='bg-white text-black-500 shadow-md rounded-full p-2 absolute top-1/2 left-2 z-10 text-2xl hover:opacity-40'
+			>
+				<HiArrowLeft />
 			</ButtonBack>
-			<ButtonNext>
-				<button
-					id='button-next'
-					className='bg-white  text-black-500 shadow-md rounded-full p-2 absolute top-1/2 right-2 z-10 text-2xl hover:opacity-40'
-				>
-					<HiArrowRight />
-				</button>
+			<ButtonNext
+				id='button-next'
+				className='bg-white  text-black-500 shadow-md rounded-full p-2 absolute top-1/2 right-2 z-10 text-2xl hover:opacity-40'
+			>
+				<HiArrowRight />
 			</ButtonNext>
 		</CarouselProvider>
 	)
