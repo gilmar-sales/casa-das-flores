@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Product } from '../../@types/interfaces'
+import { Product } from '../../../@types/interfaces'
 
-import Pagination from '../../components/organisms/Pagination'
-import ProductCard from '../../components/molecules/ProductCard'
-import api from '../../middlewares/api'
+import Pagination from '../../organisms/Pagination'
+import ProductCard from '../../molecules/ProductCard'
+import api from '../../../middlewares/api'
 
 export default function Home() {
 	const [page, setPage] = useState(1)

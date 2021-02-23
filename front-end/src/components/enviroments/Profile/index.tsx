@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import SignContext from '../../contexts/SignContext'
+
+import SignContext from '../../../contexts/SignContext'
 
 export default function Profile() {
 	const ctx = useContext(SignContext)
