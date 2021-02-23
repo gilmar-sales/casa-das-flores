@@ -18,6 +18,8 @@ import SignUp from '../../molecules/forms/SignUp'
 import AccountMenu from './AccountMenu'
 import SignContext from '../../../contexts/SignContext'
 import ShopBagContext from '../../../contexts/ShopBagContext'
+import CircleButton from '../../atoms/CircleButton'
+import Badge from '../../atoms/Badge'
 
 export default function NavBar(props: { children: any }) {
 	const [searchText, setSearchText] = useState('')
@@ -61,30 +63,25 @@ export default function NavBar(props: { children: any }) {
 					</div>
 					{/* Right Section*/}
 					<div className='flex px-2 sm:px-4 lg:px-6 space-x-2 text-white select-none'>
-						<button
-							className='bg-green-500 h-10 w-10 p-2 rounded-full '
-							data-tip='Suporte'
-						>
-							<IoChatboxEllipsesOutline className='h-6 w-6' />
-						</button>
-						<button
-							className='bg-green-500 h-10 w-10 p-2 rounded-full '
-							data-tip='Desejos'
-						>
-							<IoHeartOutline className='h-6 w-6' />
-						</button>
+						<Link to={'/store/support'}>
+							<CircleButton
+								icon={<IoChatboxEllipsesOutline className='h-6 w-6' />}
+								data-tip='Suporte'
+							/>
+						</Link>
+						<Link to={'/store/wishlist'}>
+							<CircleButton
+								icon={<IoHeartOutline className='h-6 w-6' />}
+								data-tip='Desejos'
+							/>
+						</Link>
 						<Link to={'/store/shopbag'}>
-							<button
-								className='bg-green-500 h-10 w-10 p-2 rounded-full relative'
-								data-tip='Cesta'
-							>
-								<IoBagHandleOutline className='h-6 w-6' />
-								{shopBagCtx.items.length !== 0 && (
-									<div className='absolute top-0 left-0 bg-red-500 text-xs w-4 h-4 rounded-full'>
-										{shopBagCtx.items.length}
-									</div>
-								)}
-							</button>
+							<Badge content={shopBagCtx.items.length}>
+								<CircleButton
+									icon={<IoBagHandleOutline className='h-6 w-6' />}
+									data-tip='Cesta'
+								/>
+							</Badge>
 						</Link>
 						<div className='relative'>
 							<AccountMenu />
