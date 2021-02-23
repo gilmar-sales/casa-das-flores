@@ -17,7 +17,7 @@ import {
 } from 'pure-react-carousel'
 
 import 'pure-react-carousel/dist/react-carousel.es.css'
-import { Picture } from '../../@types/interfaces'
+import { Picture } from '../../../@types/interfaces'
 
 interface CarouselProps extends Omit<CarouselProviderProps, 'children'> {
 	slides?: Picture[]

@@ -10,8 +10,8 @@ import {
 } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { Product } from '../../@types/interfaces'
-import ShopBagContext from '../../contexts/ShopBagContext'
+import { Product } from '../../../@types/interfaces'
+import ShopBagContext from '../../../contexts/ShopBagContext'
 
 interface ProductCardProps {
 	product?: Product
@@ -73,7 +73,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
 				flex-col 
 				justify-between
 				border 
-				rounded-md 
+				rounded-md
+				shadow
+				overflow-hidden
 				${loading && 'animate-pulse'}
 			 `}
 		>

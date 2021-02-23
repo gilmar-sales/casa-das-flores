@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Product } from '../../@types/interfaces'
 
-import Pagination from '../../components/Pagination'
-import ProductCard from '../../components/ProductCard'
+import Pagination from '../../components/organisms/Pagination'
+import ProductCard from '../../components/molecules/ProductCard'
 import api from '../../middlewares/api'
 
 export default function Home() {

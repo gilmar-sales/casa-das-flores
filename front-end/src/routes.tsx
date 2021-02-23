@@ -7,15 +7,15 @@ import {
 	Redirect,
 } from 'react-router-dom'
 
-import { isAuthenticated } from './middlewares/auth'
+import { IsAuthenticated } from './middlewares/auth'
 
-import NavBar from './components/NavBar'
+import NavBar from './components/ecosystems/NavBar'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import ProductOverview from './pages/ProductOverview'
 import NotFound from './pages/NotFound'
 
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/ecosystems/Dashboard'
 import Overview from './pages/admin/Overview'
 import Customers from './pages/admin/Customers'
 import Sales from './pages/admin/Sales'
@@ -26,7 +26,7 @@ import ShopBag from './pages/ShopBag'
 
 const ProtectedRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
 	const routeComponent = (props: any) =>
-		!isAuthenticated() ? (
+		!IsAuthenticated() ? (
 			<Redirect to={{ pathname: '/', state: { from: props.location } }} />
 		) : (
 			React.createElement(component as React.FunctionComponent, props)

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Product } from '../../@types/interfaces'
-import ProductDetail from '../../components/ProductDetail'
+import ProductDetail from '../../components/molecules/ProductDetail'
 import api from '../../middlewares/api'
 
 interface OverviewParams {

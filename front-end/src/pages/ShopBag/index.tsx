@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import BagItemCard from '../../components/BagItemCard'
+import BagItemCard from '../../components/molecules/BagItemCard'
 import ShopBagContext from '../../contexts/ShopBagContext'
 
 export default function ShopBag() {

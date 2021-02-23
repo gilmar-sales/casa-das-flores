@@ -1,7 +1,7 @@
 import React from 'react'
 import { IoStar } from 'react-icons/io5'
 
-import { Product } from '../../@types/interfaces'
+import { Product } from '../../../@types/interfaces'
 import ProductSlide from '../ProductSlide'
 
 interface ProductDetailProps {
