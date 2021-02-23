@@ -7,7 +7,7 @@ import { ShopBagProvider } from './contexts/ShopBagContext'
 
 function App() {
 	return (
-		<div className='App '>
+		<div>
 			<SignProvider>
 				<ShopBagProvider>
 					<Routes />
