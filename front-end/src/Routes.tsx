@@ -7,26 +7,26 @@ import {
 	Redirect,
 } from 'react-router-dom'
 
-import { isAuthenticated } from './middlewares/auth'
+import { IsAuthenticated } from './middlewares/auth'
 
-import NavBar from './components/NavBar'
-import Home from './pages/Home'
-import Profile from './pages/Profile'
-import ProductOverview from './pages/ProductOverview'
-import NotFound from './pages/NotFound'
+import NavBar from './components/ecosystems/NavBar'
+import Home from './components/enviroments/Home'
+import Profile from './components/enviroments/Profile'
+import ProductOverview from './components/enviroments/ProductOverview'
+import NotFound from './components/enviroments/NotFound'
 
-import Dashboard from './components/Dashboard'
-import Overview from './pages/admin/Overview'
-import Customers from './pages/admin/Customers'
-import Sales from './pages/admin/Sales'
-import Orders from './pages/admin/Orders'
-import Announcements from './pages/admin/Announcements'
-import Products from './pages/admin/Products'
-import ShopBag from './pages/ShopBag'
+import Dashboard from './components/ecosystems/Dashboard'
+import Overview from './components/enviroments/admin/Overview'
+import Customers from './components/enviroments/admin/Customers'
+import Sales from './components/enviroments/admin/Sales'
+import Orders from './components/enviroments/admin/Orders'
+import Announcements from './components/enviroments/admin/Announcements'
+import Products from './components/enviroments/admin/Products'
+import ShopBag from './components/enviroments/ShopBag'
 
 const ProtectedRoute: React.FC<RouteProps> = ({ component, ...rest }) => {
 	const routeComponent = (props: any) =>
-		!isAuthenticated() ? (
+		!IsAuthenticated() ? (
 			<Redirect to={{ pathname: '/', state: { from: props.location } }} />
 		) : (
 			React.createElement(component as React.FunctionComponent, props)

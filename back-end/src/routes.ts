@@ -2,6 +2,7 @@ import { Router } from 'express'
 
 import CustomerController from './controllers/customerController'
 import ProfileController from './controllers/profileController'
+import AuthController from './controllers/authController'
 import ShopBagController from './controllers/shopBagController'
 import ProductController from './controllers/productController'
 import CategoryController from './controllers/categoryController'
@@ -19,8 +20,9 @@ routes.get('/customers', authMiddleware, CustomerController.read)
 routes.put('/customers', authMiddleware, CustomerController.update)
 routes.delete('/customers/:id', authMiddleware, CustomerController.delete)
 
-routes.post('/customers/profile/auth', ProfileController.authenticate)
-routes.get('/customers/profile/auth', ProfileController.validate)
+routes.post('/customers/auth', AuthController.create)
+routes.get('/customers/auth', AuthController.read)
+
 routes.get('/customers/profile', authMiddleware, ProfileController.read)
 
 routes.post('/customer/shopbag', authMiddleware, ShopBagController.create)

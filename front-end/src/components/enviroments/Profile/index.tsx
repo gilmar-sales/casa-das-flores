@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import SignContext from '../../../contexts/SignContext'
 
 export default function Profile() {
+	const ctx = useContext(SignContext)
 	return (
 		<div className='grid grid-cols-6 gap-4 px-4'>
 			{/* Menu */}
@@ -12,9 +15,10 @@ export default function Profile() {
 				<div className='grid grid-cols-6'>
 					<div className='col-span-6 md:col-span-2'>
 						<div className='flex justify-center items-center rounded-full bg-green-500 text-white h-16 w-16 text-2xl select-none'>
-							GC
+							{ctx.profile.firstName?.charAt(0) +
+								ctx.profile.lastName?.charAt(0)}
 						</div>
-						<div>Gilmar Custodio</div>
+						<div>{`${ctx.profile.firstName} ${ctx.profile.lastName}`}</div>
 					</div>
 					<div className='col-span-6 md:col-span-4 grid grid-cols-2'>
 						<div className='col-span-2 sm:col-span-1'>Telefone</div>

@@ -10,14 +10,14 @@ import {
 import { Link } from 'react-router-dom'
 
 import ReactTooltip from 'react-tooltip'
-import Modal from '../Modal'
-import Logo from '../../icons/Logo'
-import SignIn from '../forms/SignIn'
-import SignUp from '../forms/SignUp'
+import Modal from '../../molecules/Modal'
+import Logo from '../../../icons/Logo'
+import SignIn from '../../molecules/forms/SignIn'
+import SignUp from '../../molecules/forms/SignUp'
 
 import AccountMenu from './AccountMenu'
-import SignContext from '../../contexts/SignContext'
-import ShopBagContext from '../../contexts/ShopBagContext'
+import SignContext from '../../../contexts/SignContext'
+import ShopBagContext from '../../../contexts/ShopBagContext'
 
 export default function NavBar(props: { children: any }) {
 	const [searchText, setSearchText] = useState('')

@@ -1,8 +1,8 @@
 import React from 'react'
-import Routes from './routes'
+import Routes from './Routes'
 
 import { SignProvider } from './contexts/SignContext'
-import Footer from './components/Footer'
+import Footer from './components/molecules/Footer'
 import { ShopBagProvider } from './contexts/ShopBagContext'
 
 function App() {

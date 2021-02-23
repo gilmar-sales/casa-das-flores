@@ -9,7 +9,7 @@ import {
 } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import ShopBagContext, { BagItem } from '../contexts/ShopBagContext'
+import ShopBagContext, { BagItem } from '../../contexts/ShopBagContext'
 
 interface BagItemProps {
 	item?: BagItem

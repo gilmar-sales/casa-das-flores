@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { object, string } from 'yup'
 
-import Logo from '../../icons/Logo'
-import api from '../../middlewares/api'
-import { login } from '../../middlewares/auth'
+import Logo from '../../../icons/Logo'
+import api from '../../../middlewares/api'
+import { login } from '../../../middlewares/auth'
 import { Link } from 'react-router-dom'
 import {
 	IoLockClosed,
@@ -46,7 +46,7 @@ export default function SignIn() {
 				validationSchema={validationSchema}
 				onSubmit={(values, actions) => {
 					setLoading(true)
-					api.post('/customers/profile/auth', values).then((response) => {
+					api.post('/customers/auth', values).then((response) => {
 						setLoading(false)
 						if (response.data.errors) {
 							actions.setErrors(response.data.errors)

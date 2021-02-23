@@ -1,7 +1,7 @@
 import React, { createContext, useEffect } from 'react'
 import { Product } from '../@types/interfaces'
 import api from '../middlewares/api'
-import { isAuthenticated } from '../middlewares/auth'
+import { IsAuthenticated } from '../middlewares/auth'
 import usePersistedState from '../utils/usePersistedState'
 
 export interface BagItem extends Product {
@@ -22,12 +22,12 @@ const ShopBagContext = createContext<ContextProps>({} as ContextProps)
 
 export const ShopBagProvider: React.FC = ({ children }) => {
 	const [items, setItems] = usePersistedState<BagItem[]>(
-		isAuthenticated() ? 'userBag' : 'guessBag',
+		IsAuthenticated() ? 'userBag' : 'guessBag',
 		[]
 	)
 
 	useEffect(() => {
-		if (isAuthenticated())
+		if (IsAuthenticated())
 			api.get('/customer/shopbag').then((response) => {
 				setItems(response.data)
 			})
@@ -48,7 +48,7 @@ export const ShopBagProvider: React.FC = ({ children }) => {
 			}
 		}
 
-		if (isAuthenticated()) {
+		if (IsAuthenticated()) {
 			await api
 				.post('/customer/shopbag', { product_id: product?.id })
 				.then((response) => {
@@ -69,7 +69,7 @@ export const ShopBagProvider: React.FC = ({ children }) => {
 			}
 		}
 
-		if (isAuthenticated()) {
+		if (IsAuthenticated()) {
 			await api.delete(`/customer/shopbag/${product?.id}`).then((response) => {
 				if (response.status === 200) {
 					_popItem()
@@ -88,7 +88,7 @@ export const ShopBagProvider: React.FC = ({ children }) => {
 		if (product) {
 			const item = items.find((element) => element.id === product.id)
 
-			if (isAuthenticated()) {
+			if (IsAuthenticated()) {
 				if (item) {
 					api
 						.put('/customer/shopbag', {
@@ -119,7 +119,7 @@ export const ShopBagProvider: React.FC = ({ children }) => {
 		if (product) {
 			const item = items.find((element) => element.id === product.id)
 
-			if (isAuthenticated()) {
+			if (IsAuthenticated()) {
 				if (item) {
 					api
 						.put('/customer/shopbag', {

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { object, string } from 'yup'
 
-import api from '../../middlewares/api'
+import api from '../../../middlewares/api'
 import { Link } from 'react-router-dom'
 import { IoPersonAdd, IoSyncOutline } from 'react-icons/io5'
 

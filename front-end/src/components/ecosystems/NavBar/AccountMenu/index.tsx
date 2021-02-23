@@ -1,23 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 
 import { IoPersonOutline } from 'react-icons/io5'
 
-import SignContext from '../../../contexts/SignContext'
+import SignContext from '../../../../contexts/SignContext'
 
-import { isAuthenticated, logout } from '../../../middlewares/auth'
+import { IsAuthenticated, logout } from '../../../../middlewares/auth'
 import { Link } from 'react-router-dom'
-import { Profile } from '../../../@types/interfaces'
-import api from '../../../middlewares/api'
 
 export default function AccountMenu() {
 	const ctx = useContext(SignContext)
-	const [profile, setProfile] = useState({} as Profile)
-	useEffect(() => {
-		api.get('/customers/profile').then((response) => {
-			setProfile(response.data)
-		})
-	}, [])
 
 	const signOut = () => {
 		logout()
@@ -25,12 +17,13 @@ export default function AccountMenu() {
 	}
 
 	const accountBtn = () => {
-		if (isAuthenticated()) {
-			if (profile.profilePicture) return <span>Pc</span>
+		if (IsAuthenticated()) {
+			if (ctx.profile.profilePicture) return <span>Pc</span>
 			else
 				return (
 					<span className='uppercase'>
-						{profile.firstName?.charAt(0) + profile.lastName?.charAt(0) || (
+						{ctx.profile.firstName?.charAt(0) +
+							ctx.profile.lastName?.charAt(0) || (
 							<IoPersonOutline className='h-6 w-6' />
 						)}
 					</span>
@@ -61,7 +54,7 @@ export default function AccountMenu() {
 							static
 							className='absolute z-20 right-0 w-36 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none'
 						>
-							{isAuthenticated() ? (
+							{IsAuthenticated() ? (
 								<div className='py-1'>
 									<Menu.Item>
 										{({ active }) => (
@@ -75,7 +68,7 @@ export default function AccountMenu() {
 											</Link>
 										)}
 									</Menu.Item>
-									{profile.role === 'admin' && (
+									{ctx.profile.role === 'admin' && (
 										<Menu.Item>
 											{({ active }) => (
 												<Link

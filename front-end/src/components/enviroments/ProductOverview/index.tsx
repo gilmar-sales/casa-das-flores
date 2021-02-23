@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Product } from '../../@types/interfaces'
-import ProductDetail from '../../components/ProductDetail'
-import api from '../../middlewares/api'
+
+import { Product } from '../../../@types/interfaces'
+import ProductDetail from '../../molecules/ProductDetail'
+import api from '../../../middlewares/api'
 
 interface OverviewParams {
 	slug: string
